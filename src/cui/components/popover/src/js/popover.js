@@ -309,6 +309,12 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
 
         popover.isShown = true;
 
+        if((typeof popover.config.location === 'string') && (popover.config.location.indexOf('below')!== -1)){
+            priv.resetMaxHeight(popover);
+            priv.resetSize(popover);
+            priv.resetInnerContentHeight(popover);
+        }
+
         // Add event listeners
         $body.on('click', popover.onBodyClick);
 
@@ -626,6 +632,18 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
         popover.$popover.css({
                             height: defaultWidth,
                             width: defaultHeight,
+                        });
+    };
+
+    priv.resetMaxHeight = function _resetMaxHeight (popover) {
+        var defaultHeight = '';
+
+        if (popover.config.display.css.height) {
+            defaultHeight = popover.config.display.css.height;
+        }
+
+        popover.$popover.css({
+                            maxHeight: defaultHeight
                         });
     };
 
