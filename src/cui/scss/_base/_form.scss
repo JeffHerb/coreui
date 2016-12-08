@@ -164,6 +164,7 @@ legend {
     .cui-controls {
         display: flex;
         align-items: baseline;
+        flex-wrap: wrap;
 
         & > * {
             // Space between adjacent controls
@@ -176,6 +177,7 @@ legend {
         button:not([class*="cui-icon"]) {
             padding: (0.5 * $cui-button-padding-top) (0.5 * $cui-button-padding-right);
             line-height: $cui-field-line-height;
+            margin-bottom: 0.5em; // If the buttons wrap, this puts some space between them
         }
     }
 
@@ -370,14 +372,16 @@ legend {
 // * @section    Input groups and field appends/prepends
 // * --------------------------------------------------------
 .cui-input-wrapper {
-    display: table;
+    display: flex;
     border-collapse: separate; // Prevent input groups from inheriting border styles from table cells when placed within a `<table>`
 
     input,
     select,
     .cui-input-prepend,
     .cui-input-append {
-        display: table-cell;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
         border-radius: 0;
     }
 
@@ -417,16 +421,14 @@ legend {
 
     .cui-currency & {
         input {
-            padding-right: 4px; // Keep the input value closer to the append
+            padding-right: 4px; // Keeps the input's contents closer to the appendix
         }
 
         .cui-input-prepend {
-            width: $cui-input-prepend-width;
         }
 
         .cui-input-append {
-            width: $cui-input-append-width;
-            padding-left: 4px; // Keep the append closer to the input value
+            padding-left: 4px; // Keeps the appendix closer to the input's contents
         }
     }
 }
