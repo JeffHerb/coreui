@@ -437,17 +437,20 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
      * If the modal has scrollable content, when you reach the bottom or top of the modal's content and keep scrolling the body itself will begin scrolling. These styles will prevent that from happening which means the user won't lose their place.
      */
     _priv.disablePageScrolling = function _disablePageScrolling () {
-        document.body.style.height = '100%';
-        document.body.style.overflow = 'hidden';
+        $window.on('wheel.cui.modal', _events.stopScrollEvent); // modern standard
+        $window.on('touchmove.cui.modal', _events.stopScrollEvent); // mobile
+        $(document).on('keydown.cui.modal', _events.stopScrollEventForKeys);
     };
 
     /**
      * Allows the page body to scroll
      */
     _priv.enablePageScrolling = function _enablePageScrolling () {
-        document.body.style.removeProperty('height');
-        document.body.style.removeProperty('overflow');
+        $window.off('wheel.cui.modal');
+        $window.off('touchmove.cui.modal');
+        $(document).off('keydown.cui.modal');
     };
+
 
     ////////////
     // Events //
@@ -491,6 +494,81 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
 
             // Set focus
             _priv.setFocusOnClose(modal);
+        }
+    };
+
+    // http://output.jsbin.com/xatidu/4/
+    // via http://stackoverflow.com/a/4770179/348995
+    _events.stopScrollEvent = function _stopScrollEvent (evt, $modalOuter, modalBody) {
+        $modalOuter = $modalOuter || $(evt.target).closest('.' + CLASSES.modal);
+
+        // Scroll took place outside of a modal element
+        if (!$modalOuter.length) {
+            evt.preventDefault();
+        }
+        else {
+            modalBody = modalBody || $modalOuter.find('.' + CLASSES.modalBody).get(0);
+
+            // Check for plausible scroll actions on the modal body
+            if (modalBody) {
+                // Upward scroll attempt when the modal body has already been scrolled to the top
+                if (evt.originalEvent.deltaY < 0 && modalBody.scrollTop === 0) {
+                    evt.preventDefault();
+                }
+                // Downward scroll attempt when the modal body has already been scrolled to the bottom
+                else if (evt.originalEvent.deltaY > 0 && (modalBody.scrollHeight - modalBody.scrollTop === modalBody.clientHeight)) {
+                    evt.preventDefault();
+                }
+            }
+        }
+    };
+
+    _events.scrollKeyCodes = {
+        // `1` means the key causes downward movement
+        // `2` means the key causes upward movement
+        37: 1, // left arrow
+        38: 2, // up arrow
+        39: 1, // right arrow
+        40: 1, // down arrow
+        32: 1, // spacebar
+        33: 2, // pageup
+        34: 1, // pagedown
+        35: 1, // end
+        36: 2, // home
+    };
+
+    _events.stopScrollEventForKeys = function _stopScrollEventForKeys (evt) {
+        var $modalOuter = $(evt.target).closest('.' + CLASSES.modal);
+        var modalBody;
+
+        // Scroll took place outside of a modal element
+        if (!$modalOuter.length) {
+            if (_events.scrollKeyCodes[evt.keyCode]) {
+                _events.stopScrollEvent(evt, $modalOuter);
+                return false;
+            }
+        }
+        else {
+            modalBody = $modalOuter.find('.' + CLASSES.modalBody).get(0);
+
+            // Check for plausible scroll actions on the modal body
+            if (modalBody) {
+                // Upward attempt
+                if (_events.scrollKeyCodes[evt.keyCode] === 2 && modalBody.scrollTop === 0) {
+                    _events.stopScrollEvent(evt, $modalOuter, modalBody);
+                    return false;
+                }
+                // Downward attempt
+                else if (_events.scrollKeyCodes[evt.keyCode] !== 2 && (modalBody.scrollHeight - modalBody.scrollTop === modalBody.clientHeight)) {
+                    _events.stopScrollEvent(evt, $modalOuter, modalBody);
+                    return false;
+                }
+                // Not an event we need to worry about, but make sure focus is set on the body
+                // Sometimes the first keystroke will affect the window, but this call will ensure the next one only affects the modal's body, which is better than nothing. (CP 12/27/16)
+                else {
+                    modalBody.focus();
+                }
+            }
         }
     };
 
@@ -625,7 +703,8 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                 boxOptions.body = [];
 
                 var bodyContent = $('<div/>', {
-                                    'class': CLASSES.modalBodyContent
+                                    'class': CLASSES.modalBodyContent,
+                                    'tabindex': '1',
                                 });
 
                 bodyContent.append(modal.config.html);
