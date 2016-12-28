@@ -48,8 +48,8 @@
     }
 }
 
-.cui-modal *:not(.cui-modal-hide),
-.cui-modal *:not(.cui-modal-hide):focus {
+.cui-modal *:not(.cui-modal-hide):not(button):not(input):not(.cui-modal-body-content),
+.cui-modal *:not(.cui-modal-hide):not(button):not(input):not(.cui-modal-body-content):focus {
     outline: none !important;
 }
 

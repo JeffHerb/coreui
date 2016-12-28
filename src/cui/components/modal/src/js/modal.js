@@ -93,7 +93,6 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                     fastdom.measure(function _buildModal_fastdom3 () {
                         // Hook to execute a script after the modal has been created
                         if (typeof modal.config.onCreate === 'function') {
-
                             modal.config.onCreate(modal);
                         }
 
@@ -132,7 +131,10 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                     _priv.adjustContentHeight(modal);
                     _priv.centerModal(modal);
 
-                    if (modal.config.focusOnShow) {
+                    if (typeof modal.config.focusOnShow === 'string') {
+                        modal.$self.find(modal.config.focusOnShow).focus();
+                    }
+                    else if (modal.config.focusOnShow) {
                         modal.config.focusOnShow.focus();
                     }
                     else {
@@ -158,7 +160,10 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                     _priv.adjustModalCSS(modal);
                     _priv.adjustContentHeight(modal);
 
-                    if (modal.config.focusOnShow) {
+                    if (typeof modal.config.focusOnShow === 'string') {
+                        modal.$self.find(modal.config.focusOnShow).focus();
+                    }
+                    else if (modal.config.focusOnShow) {
                         modal.config.focusOnShow.focus();
                     }
                     else {
@@ -275,7 +280,6 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                 focusElem.focus();
             }, 100);
         }
-
         // Set focus to the modal's toggler
         else if (modal.$button) {
             modal.$button.focus();
@@ -310,7 +314,7 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
 
             // Check if the modal or content area has focus.
             // IE returns modalContents class when tabbing from the modal copy where Chrome and FF return the modal class.
-            if ( ($focusedItem.hasClass(CLASSES.modal)) || ($focusedItem.hasClass(CLASSES.modalBodyContent)) ) {
+            if (($focusedItem.hasClass(CLASSES.modal)) || ($focusedItem.hasClass(CLASSES.modalBodyContent))) {
                 isModalFocused = true;
             }
 
@@ -339,7 +343,13 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                 if (isModalFocused) {
                     // The next item to gain focus would be the close button, but there is another element to focus on besides the button, so set the focus to that element instead
                     if (modal.$focusableElems.eq(0).hasClass(CLASSES.closeButton) && numberOfFocusableElems > 1) {
-                        modal.$focusableElems.get(1).focus();
+                        // Set focus on the next focusable item
+                        if (focusedItemIndex < numberOfFocusableElems - 1) {
+                            modal.$focusableElems.get(focusedItemIndex + 1).focus();
+                        }
+                        else {
+                            modal.$focusableElems.get(0).focus();
+                        }
                     }
                     // Setting focus to the only element available to focus on
                     else {
@@ -358,6 +368,7 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                     modal.$focusableElems.get(0).focus();
                     evt.preventDefault();
                 }
+                // Otherwise, let the browser handle it (e.g. the user is probably just moving between multiple fields within the modal)
             }
         }
     };
@@ -538,7 +549,8 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
     };
 
     _events.stopScrollEventForKeys = function _stopScrollEventForKeys (evt) {
-        var $modalOuter = $(evt.target).closest('.' + CLASSES.modal);
+        var $target = $(evt.target);
+        var $modalOuter = $target.closest('.' + CLASSES.modal);
         var modalBody;
 
         // Scroll took place outside of a modal element
@@ -559,13 +571,16 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                     return false;
                 }
                 // Downward attempt
-                else if (_events.scrollKeyCodes[evt.keyCode] !== 2 && (modalBody.scrollHeight - modalBody.scrollTop === modalBody.clientHeight)) {
-                    _events.stopScrollEvent(evt, $modalOuter, modalBody);
-                    return false;
+                else if (_events.scrollKeyCodes[evt.keyCode] === 1 && (modalBody.scrollHeight - modalBody.scrollTop === modalBody.clientHeight)) {
+                    // Make sure the user didn't press the spacebar on a button, link, etc, which is allowed
+                    if (evt.keyCode !== 32 || !$target.is('button, input, a')) {
+                        _events.stopScrollEvent(evt, $modalOuter, modalBody);
+                        return false;
+                    }
                 }
-                // Not an event we need to worry about, but make sure focus is set on the body
+                // Not an event we need to worry about, but make sure focus is set on the body. Ignore the tab key since tabbing is handled elsewhere.
                 // Sometimes the first keystroke will affect the window, but this call will ensure the next one only affects the modal's body, which is better than nothing. (CP 12/27/16)
-                else {
+                else if (evt.keyCode !== 9) {
                     modalBody.focus();
                 }
             }
@@ -721,12 +736,16 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                 boxOptions.header = [];
 
                 var headerContent = $('<div/>', {
-                                    'class': CLASSES.modalHeaderContent
-                                });
+                                        'class': CLASSES.modalHeaderContent,
+                                    });
 
                 if (modal.config.header && modal.config.header.html) {
                     headerContent.append(modal.config.header.html);
                     boxOptions.className += ' ' + CLASSES.modalUseHeader;
+                }
+
+                if (modal.config.header && modal.config.header.className) {
+                    headerContent.addClass(modal.config.header.className);
                 }
 
                 if (modal.$close) {
@@ -750,13 +769,19 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
                 boxOptions.footer = [];
 
                 var footerContent = $('<div/>', {
-                                    'class': CLASSES.modalFooterContent
-                                });
+                                        'class': CLASSES.modalFooterContent,
+                                    });
+
+                if (modal.config.footer.className) {
+                    footerContent.addClass(modal.config.footer.className);
+                }
 
                 footerContent.append(modal.config.footer.html);
 
                 if (modal.config.footer.height) {
-                    boxOptions.footer.css = {'min-height': modal.config.footer.height};
+                    boxOptions.footer.css = {
+                        minHeight: modal.config.footer.height,
+                    };
                 }
 
                 boxOptions.footer.html = footerContent;

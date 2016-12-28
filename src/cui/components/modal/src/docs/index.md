@@ -63,7 +63,7 @@ Property | Type | Description
 `autoOpen` | Boolean | Whether to automatically open the modal as soon as it is created. Default: `false`.
 `hideOnEscape` | Boolean | Whether to hide the modal when the Escape key is pressed. Default: `true`.
 `alwaysCenter` | Boolean | Whether to keep the modal centered in the viewport. Default: `true`.
-`focusOnShow` | jQuery | An element that will gain focus when the modal is opened. If none is defined, the modal itself will gain focus. Default: `null`.
+`focusOnShow` | jQuery or String | An element or element selector that will gain focus when the modal is opened. If none is defined, the modal itself will gain focus. Default: `null`.
 `focusOnHide` | jQuery | The element that will gain focus when the modal is hidden. If none is defined, focus will be handled by the browser. Default: `null`.
 `onHide` | Function | Callback function that will be called just before the modal hides. It will receive the modal object as an argument. Default: `null`.
 `onCreate` | Function | Callback function that will be called when the modal is created. It will receive the modal object as an argument. Default: `null`.
