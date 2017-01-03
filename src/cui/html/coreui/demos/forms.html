@@ -1022,6 +1022,86 @@
     <script id="require" src="../../../dist/js/main.js"></script>
     <script>
         require(['jquery', 'cui', 'guid', 'domReady!'], function ($, cui, guid) {
+            // Generates code blocks
+            function createCodeBlocks ($row, isInline) {
+                var $toggler = $('<div/>');
+                var $togglerText = $('<div/>');
+                var $wrapper = $('<div/>');
+                var $pre = $('<pre/>');
+                var $code = $('<code/>');
+                var code = '';
+
+                // Format source code
+                code = $row.find('.cui-col').html()
+                            // Convert HTML tags
+                            .replace(/</g, '&lt;')
+                            .replace(/>/g, '&gt;')
+                            // Remove leading spaces from each line
+                            .replace(/^\s{24}/mg, '')
+                            // Remove space from the end of the block
+                            .replace(/[\s\n]+$/mg, '')
+                            .trim(); // Needed to prevent an extra space from sticking around on the first line for some reason...
+
+                // Add sample wrapper element for inline labels
+                if (isInline) {
+                    code =  '&lt;div class="cui-inline-field"&gt;' +
+                            '\n\n    &lt;!-- There may be any number elements between the container with `.cui-inline-field` and the field itself --&gt;' +
+                            '\n    &lt;!-- ... --&gt;\n\n' +
+                            code.replace(/^(\s*)/gm, '    $1') +
+                            '\n\n    &lt;!-- ... --&gt;\n\n' +
+                            '&lt;/div&gt;';
+                }
+
+                // Toggler
+                $toggler
+                    .addClass('cui-col-small-12')
+                    .append(
+                        $togglerText
+                            .addClass('demo-example-toggle')
+                            .attr('role', 'button')
+                            .text('Show code')
+                    )
+                    .insertAfter($row)
+                    // Toggle the code block
+                    .on('click', function () {
+                        // Currently hidden, so show it
+                        if ($pre.hasClass('cui-hidden')) {
+                            $togglerText.text('Hide code');
+                            $pre.removeClass('cui-hidden');
+                        }
+                        // Currently shown, so hide it
+                        else {
+                            $togglerText.text('Show code');
+                            $pre.addClass('cui-hidden');
+                        }
+                    });
+
+                // Code block
+                $code
+                    .addClass('language-html')
+                    .attr('data-lang', 'html')
+                    .html(code);
+
+                // Outer wrapper
+                $wrapper
+                    .addClass('cui-row')
+                    .addClass('demo-example-code')
+                    .append($toggler)
+                    .append(
+                        $pre
+                            .addClass('cui-hidden')
+                            .addClass('cui-col-small-12')
+                            .append($code)
+                    )
+                    .insertAfter($row);
+
+                // Apply syntax highlighting
+                // See: https://highlightjs.org/usage/
+                if (typeof hljs === 'object') {
+                    hljs.highlightBlock($code.get(0));
+                }
+            };
+
             // Create a copy of all fields but give them the inline layout
             $('.demo-source-section').each(function () {
                 var $source = $(this);
@@ -1092,89 +1172,13 @@
                     }
                 });
 
-            // Generate code blocks
+            // Initial creation of code blocks
             $('section').each(function () {
                 var $section = $(this);
                 var isInline = $section.hasClass('cui-inline-field');
 
                 $section.find('.demo-example').each(function () {
-                    var $row = $(this);
-                    var $toggler = $('<div/>');
-                    var $togglerText = $('<div/>');
-                    var $wrapper = $('<div/>');
-                    var $pre = $('<pre/>');
-                    var $code = $('<code/>');
-                    var code = '';
-
-                    // Format source code
-                    code = $row.find('.cui-col').html()
-                                // Convert HTML tags
-                                .replace(/</g, '&lt;')
-                                .replace(/>/g, '&gt;')
-                                // Remove leading spaces from each line
-                                .replace(/^\s{24}/mg, '')
-                                // Remove space from the end of the block
-                                .replace(/[\s\n]+$/mg, '')
-                                .trim(); // Needed to prevent an extra space from sticking around on the first line for some reason...
-
-                    // Add sample wrapper element for inline labels
-                    if (isInline) {
-                        code =  '&lt;div class="cui-inline-field"&gt;' +
-                                '\n\n    &lt;!-- There may be any number elements between the container with `.cui-inline-field` and the field itself --&gt;' +
-                                '\n    &lt;!-- ... --&gt;\n\n' +
-                                code.replace(/^(\s*)/gm, '    $1') +
-                                '\n\n    &lt;!-- ... --&gt;\n\n' +
-                                '&lt;/div&gt;';
-                    }
-
-                    // Toggler
-                    $toggler
-                        .addClass('cui-col-small-12')
-                        .append(
-                            $togglerText
-                                .addClass('demo-example-toggle')
-                                .attr('role', 'button')
-                                .text('Show code')
-                        )
-                        .insertAfter($row)
-                        // Toggle the code block
-                        .on('click', function () {
-                            // Currently hidden, so show it
-                            if ($pre.hasClass('cui-hidden')) {
-                                $togglerText.text('Hide code');
-                                $pre.removeClass('cui-hidden');
-                            }
-                            // Currently shown, so hide it
-                            else {
-                                $togglerText.text('Show code');
-                                $pre.addClass('cui-hidden');
-                            }
-                        });
-
-                    // Code block
-                    $code
-                        .addClass('language-html')
-                        .attr('data-lang', 'html')
-                        .html(code);
-
-                    // Outer wrapper
-                    $wrapper
-                        .addClass('cui-row')
-                        .addClass('demo-example-code')
-                        .append($toggler)
-                        .append(
-                            $pre
-                                .addClass('cui-hidden')
-                                .addClass('cui-col-small-12')
-                                .append($code)
-                        )
-                        .insertAfter($row);
-
-                    // Apply syntax highlighting
-                    // See: https://highlightjs.org/usage/
-                    if (typeof hljs === 'object') {
-                        hljs.highlightBlock($code.get(0));
-                    }
+                    createCodeBlocks($(this), isInline);
                 });
             });
 
@@ -1278,6 +1282,20 @@
                                     fontStyle: 'italic',
                                 })
                                 .text('Controls have been added');
+
+                            // Re-create code blocks
+                            $('section').each(function () {
+                                var $section = $(this);
+                                var isInline = $section.hasClass('cui-inline-field');
+
+                                // Remove the old code block
+                                $section.find('.demo-example-code').remove();
+
+                                // Make a new one
+                                $section.find('.demo-example').each(function () {
+                                    createCodeBlocks($(this), isInline);
+                                });
+                            });
                         }
                     };
 
@@ -1288,11 +1306,11 @@
                         // Field does not have controls yet, so add some
                         if ($controls.length === 0) {
                             $fieldMain.append(
-                                '<div class="cui-controls">' +
-                                    '<button type="button" class="cui-icon demo-button-error" title="Error" tabindex="1">Error</button>' +
-                                    '<a href="#' + guid() + '" role="button" class="cui-icon demo-button-info" title="More information" tabindex="1">Info</a>' +
-                                    '<button type="button" tabindex="1">Save</button>' +
-                                '</div>'
+                                '    <div class="cui-controls">\n' +
+                                    '            <button type="button" class="cui-icon demo-button-error" title="Error" tabindex="1">Error</button>\n' +
+                                    '            <a href="#' + guid() + '" role="button" class="cui-icon demo-button-info" title="More information" tabindex="1">Info</a>\n' +
+                                    '            <button type="button" tabindex="1">Save</button>\n' +
+                                '        </div>\n    '
                             );
                         }
                     };
