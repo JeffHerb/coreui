@@ -235,6 +235,54 @@ body{
                     </div>
                 </div>
             </section>
+            <section>
+                <div class="cui-row">
+                    <div class="cui-col-small-12">
+                        <h3>Footer Buttons Modal Tests</h3>
+                    </div>
+
+                    <div class="cui-col-small-2">
+                        <div class="cui-field-header">Modal FB-1:</div>
+                        <div class="cui-field-body">
+                            <button type="button" class="cui-button" id="testfb1" tabindex="1">Test</button>
+                        </div>
+                    </div>
+
+                    <div class="cui-col-small-2">
+                        <div class="cui-field-header">Modal FB-2:</div>
+                        <div class="cui-field-body">
+                            <button type="button" class="cui-button" id="testfb2" tabindex="1">Test</button>
+                        </div>
+                    </div>
+
+                    <div class="cui-col-small-2">
+                        <div class="cui-field-header">Modal FB-3:</div>
+                        <div class="cui-field-body">
+                            <button type="button" class="cui-button" id="testfb3" tabindex="1">Test</button>
+                        </div>
+                    </div>
+
+                    <div class="cui-col-small-2">
+                        <div class="cui-field-header">Modal FB-4:</div>
+                        <div class="cui-field-body">
+                            <button type="button" class="cui-button" id="testfb4" tabindex="1">Test</button>
+                        </div>
+                    </div>
+
+                    <div class="cui-col-small-2">
+                        <div class="cui-field-header">Modal FB-5:</div>
+                        <div class="cui-field-body">
+                            <button type="button" class="cui-button" id="testfb5" tabindex="1">Test</button>
+                        </div>
+                    </div>
+                    <div class="cui-col-small-2">
+                        <div class="cui-field-header">Modal FB-6:</div>
+                        <div class="cui-field-body">
+                            <button type="button" class="cui-button" id="testfb6" tabindex="1">Test</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </form>
     </main>
     <script id="require" src="/dist/js/main.js"></script>
@@ -476,8 +524,128 @@ body{
                     html:"<h3>HTML header</h3>",
                 },
                 footer: {
-                    html:"<h3>HTML footer</h3>",
-                }
+                    html:   '<div>' +
+                                '<p>Click either button to close the modal</p>' +
+                                '<button type="button" class="cui-button test-set-focus-to-me" tabindex="1">Alpha</button>' +
+                                '<button type="button" class="cui-button cui-button-primary" tabindex="1">Bravo</button>' +
+                            '</div>',
+                    className: 'cui-align-right',
+                },
+                focusOnShow: '.test-set-focus-to-me',
+            });
+
+            // Combined Option Tests
+            $('#testfb1').modal({
+               html: 'Combined Header/Footer Modal #1<br/>Basic modal with html. Aperiam perferendis tortor beatae maecenas senectus lacinia luctus ab proin assumenda occaecati dictumst, quam natoque nesciunt diamlorem, architecto cupiditate. Aliqua dictumst cupiditate magna nunc consequatur aute quod. Iaculis maecenas deleniti, beatae dolorum! Odio explicabo, venenatis odit orci iure vivamus euismod senectus eu. Nullam? Aliquam? Libero veritatis massa ac habitasse feugiat laoreet quos nihil varius.',
+                header: {
+                    html: 'Combined Header/Footer Modal #1',
+                },
+                footer: {
+                    html:   '<div>' +
+                                '<p>Click either button to close the modal</p>' +
+                                '<button type="button" class="cui-button test-set-focus-to-me" tabindex="1" onClick="$(\'#testfb1\').data(\'modal\').hide();">Alpha</button>' +
+                                '<button type="button" class="cui-button cui-button-primary" tabindex="1" onClick="$(\'#testfb1\').data(\'modal\').hide();">Bravo</button>' +
+                            '</div>',
+                    className: 'cui-align-right',
+                },
+                focusOnShow: '.test-set-focus-to-me',
+            });
+
+            $('#testfb2').modal({
+               html: '<p>Modal #2</p><p>You should only be able to tab between the elements in this modal. You should not be able to tab outside of it until it has been closed.</p><p><label for="modal2-field1">Field 1:</label> <input type="text" id="modal2-field1" tabindex="1"></p><p><label for="modal2-field2">Field 2:</label> <input type="text" id="modal2-field2" tabindex="1"></p><p><label for="modal2-field3">Field 3:</label> <input type="text" id="modal2-field3" tabindex="1"></p>',
+                header: {
+                    html: "<h3>HTML header with <strong>inline styles</strong></h3>"
+                },
+                footer: {
+                    html:   '<div>' +
+                                '<p>Click either button to close the modal</p>' +
+                                '<button type="button" class="cui-button test-set-focus-to-me" tabindex="1" onClick="$(\'#testfb2\').data(\'modal\').hide();">Alpha</button>' +
+                                '<button type="button" class="cui-button cui-button-primary" tabindex="1" onClick="$(\'#testfb2\').data(\'modal\').hide();">Bravo</button>' +
+                            '</div>',
+                    className: 'cui-align-right',
+                },
+                focusOnShow: '.test-set-focus-to-me',
+            });
+
+            $('#testfb3').modal({
+                 html: 'Modal #3 <p>This has lots of text and should scroll.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, conisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nullasectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>',
+                header: {
+                    html: "<h3>HTML header. Height Option set at 150px.</h3>",
+                    height: '150px'
+                },
+                footer: {
+                    html:   '<div>' +
+                                '<p>Click either button to close the modal. Height option set at 100px.</p>' +
+                                '<button type="button" class="cui-button test-set-focus-to-me" tabindex="1" onClick="$(\'#testfb3\').data(\'modal\').hide();">Alpha</button>' +
+                                '<button type="button" class="cui-button cui-button-primary" tabindex="1" onClick="$(\'#testfb3\').data(\'modal\').hide();">Bravo</button>' +
+                            '</div>',
+                    className: 'cui-align-right',
+                    height: '100px'
+                },
+                focusOnShow: '.test-set-focus-to-me',
+            });
+
+            $('#testfb4').modal({
+                html: '<p>Modal #4</p><p>This will close only when you click the \'Close\' button.</p><button type="button" tabindex="1" onClick="$(\'#testfb4\').data(\'modal\').hide();">Close Popup</button>',
+                display: {
+                    closeButton: false
+                },
+                hideOnEscape: false,
+                overlay: {
+                    closeOnClick:false
+                },
+                header: {
+                    html:"<h3>HTML header</h3>"
+                },
+                footer: {
+                    html:   '<div>' +
+                                '<p>Click either button to close the modal</p>' +
+                                '<button type="button" class="cui-button test-set-focus-to-me" tabindex="1" onClick="$(\'#testfb4\').data(\'modal\').hide();">Alpha</button>' +
+                                '<button type="button" class="cui-button cui-button-primary" tabindex="1" onClick="$(\'#testfb4\').data(\'modal\').hide();">Bravo</button>' +
+                            '</div>',
+                    className: 'cui-align-right',
+                },
+                focusOnShow: '.test-set-focus-to-me',
+            });
+
+            $('#testfb5').modal({
+                html: 'Modal #5 <p>This modal has a fixed height of 500px. This has lots of text and should scroll.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, conisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nullasectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>',
+                display:{
+                    height:'500px',
+                },
+                header: {
+                    html:"<h3>HTML header</h3>",
+                },
+                footer: {
+                    html:   '<div>' +
+                                '<p>Click either button to close the modal</p>' +
+                                '<button type="button" class="cui-button test-set-focus-to-me" tabindex="1" onClick="$(\'#testfb5\').data(\'modal\').hide();">Alpha</button>' +
+                                '<button type="button" class="cui-button cui-button-primary" tabindex="1" onClick="$(\'#testfb5\').data(\'modal\').hide();">Bravo</button>' +
+                            '</div>',
+                    className: 'cui-align-right',
+                },
+                focusOnShow: '.test-set-focus-to-me',
+            });
+
+            $('#testfb6').modal({
+                html: 'Modal #5 <p>This modal has a fixed width of 300px. This has lots of text and should scroll.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, conisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nullasectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>',
+                display:{
+                    height:'300px',
+                    css:{maxHeight:'400px',
+                    maxWidth:"500px"}
+                },
+                header: {
+                    html:"<h3>HTML header</h3>",
+                },
+                footer: {
+                    html:   '<div>' +
+                                '<p>Click either button to close the modal</p>' +
+                                '<button type="button" class="cui-button test-set-focus-to-me" tabindex="1" onClick="$(\'#testfb6\').data(\'modal\').hide();">Alpha</button>' +
+                                '<button type="button" class="cui-button cui-button-primary" tabindex="1" onClick="$(\'#testfb6\').data(\'modal\').hide();">Bravo</button>' +
+                            '</div>',
+                    className: 'cui-align-right',
+                },
+                focusOnShow: '.test-set-focus-to-me',
             });
         });
     </script>
@@ -493,6 +661,10 @@ body{
 
     section > .cui-row {
         margin-bottom: 2em;
+    }
+
+    .cui-modal-footer-content .cui-button + .cui-button {
+        margin-left: 1em;
     }
     </style>
 </body>
