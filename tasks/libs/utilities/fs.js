@@ -13,7 +13,7 @@ var mkdirp = require('mkdirp');
 var obj = require('../utilities/object');
 // var verbose = require('../utilites/verbose');
 
-var fileSystem = function() {
+var fileSystem = function () {
 
 
 	/**
@@ -88,7 +88,7 @@ var fileSystem = function() {
 
 		var sub = path;
 
-		var walk = function(dir) {
+		var walk = function (dir) {
 
             // Array to hold results
 		    var results = [];
@@ -202,7 +202,7 @@ var fileSystem = function() {
      * o - {object} - options object // No currently setup
      * @return - {object} - a native nodejs writable stream
      **/
-    var writeStream = function(k, o) {
+    var writeStream = function (k, o) {
 
         o = {};
 
@@ -213,7 +213,7 @@ var fileSystem = function() {
         var mem = {};
 
         // Create a ustom write stream function that is used for the init.
-        var writerStream = function(k, options) {
+        var writerStream = function (k, options) {
 
             if (!(this instanceof writerStream)) {
                 return new writerStream(k, options);
@@ -227,11 +227,11 @@ var fileSystem = function() {
 
             mem[k] = new Buffer('');
 
-            this.data = function() {
+            this.data = function () {
                 return mem[k];
             }
 
-            this.log = function(k) {
+            this.log = function (k) {
 
                 console.log( mem[k].toString() );
             }
@@ -302,7 +302,7 @@ var fileSystem = function() {
      * data - {object} - JSON Object
      * @return - {none}
      **/
-    var writeJSON = function(path, data) {
+    var writeJSON = function (path, data) {
 
         var data = JSON.stringify(data, null, 4);
 

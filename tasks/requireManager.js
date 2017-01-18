@@ -1,5 +1,4 @@
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
     'use strict';
 
     /*
@@ -8,9 +7,7 @@ module.exports = function(grunt) {
      */
 
     // Constants
-    var TASK_DESCRIPTION = "Require Manager for Core UI.";
-
-    var defaults = {};
+    var TASK_DESCRIPTION = 'Require Manager for Core UI';
 
     // Step Manager
     var manager = require('./libs/stepManager/manager');
@@ -23,44 +20,60 @@ module.exports = function(grunt) {
     var process = require('./libs/requireManager/process');
 
     // Define the Grunt Multitask for the Require Manager Task;
-    grunt.registerTask('requireManager', TASK_DESCRIPTION, function() {
+    grunt.registerTask('requireManager', TASK_DESCRIPTION, function () {
 
         var options = {
             configOrder: {
                 first: ['clean'],
 
                 // This order matters as task will be executed in this order!
-                last: ['sass_globbing', 'sass', 'requirejs', 'concat', 'usebanner', 'connect', 'watch']
+                last: [
+                        'sass_globbing',
+                        'sass',
+                        'requirejs',
+                        'concat',
+                        'usebanner',
+                        'connect',
+                        'watch',
+                        'intern',
+                    ],
             },
-            prodIgnoreTasks: ['connect', 'watch'],
-            runAll: ['watch', 'connect'],
+            prodIgnoreTasks: [
+                                'connect',
+                                'watch',
+                                'intern',
+                            ],
+            runAll: [
+                        'watch',
+                        'connect',
+                    ],
             includeTasks: [
-                "clean:dist",
-                "sass:main",
-                "requirejs:main",
-                "concat",
-                "usebanner"
+                'clean:dist',
+                'sass:main',
+                'requirejs:main',
+                'concat',
+                'usebanner',
             ],
             excludes: {
                 folders: [
                     '.git',
                     'node_modules',
-                    'tasks'
-                ]
-            }
+                    'tasks',
+                ],
+            },
         };
 
         // Call the manager and execute the following steps.
         manager.init(this, grunt, options)
-            .step("Startup the require manager module", base.startup)
-            .step("Search for component dist files", search.files)
-            .step("Process component folders", process.components)
-            .step("Build static asset folders tasks", build.folderTasks)
-            .step("Build the new requireJS settings file.", build.requireFile)
-            .step("Build dynamic watch tasks if needed", build.watch)
-            .step("Generate the new grunt task orders", tasks.setOrder)
-            .step("Close down the require manager module", base.closedown)
+            .step('Startup the require manager module', base.startup)
+            .step('Search for component dist files', search.files)
+            .step('Process component folders', process.components)
+            .step('Build static asset folders tasks', build.folderTasks)
+            .step('Build the new requireJS settings file.', build.requireFile)
+            .step('Build dynamic watch tasks if needed', build.watch)
+            .step('Build mode based tasks', build.mode)
+            .step('Generate the new grunt task orders', tasks.setOrder)
+            .step('Close down the require manager module', base.closedown)
             .execute();
-
     });
 };

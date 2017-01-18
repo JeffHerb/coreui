@@ -110,6 +110,25 @@ module.exports = function (grunt) {
                 ],
             },
         },
+
+        intern: {
+            functional: {
+                options: {
+                    cwd: './',
+                    runType: 'runner',
+                    config: 'tests/intern',
+                    reporters: [ 'Console' ],
+                    basePath: './tests/uiPosition/functional/',
+                    functionalSuites: [
+                        'uiPosition',
+                    ],
+                    tunnel: 'NullTunnel',
+                    environments: [{
+                        browserName: 'chrome',
+                    }],
+                },
+            }
+        },
     });
 
     // Load all Grunt plugins

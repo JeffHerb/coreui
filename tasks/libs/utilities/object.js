@@ -7,7 +7,6 @@ function object() {
 		var newObj = JSON.parse(JSON.stringify(obj));
 
 		return newObj;
-
 	};
 
 	var merge = function(obj1, obj2) {
@@ -42,7 +41,6 @@ function object() {
 	    }
 
 	    return obj1;
-
 	};
 
 	return {

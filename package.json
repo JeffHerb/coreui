@@ -1,7 +1,7 @@
 {
     "name": "coreui",
     "title": "Core UI",
-    "version": "0.2.10",
+    "version": "0.3.0",
     "description": "Core UI Frontend Framework",
     "author": {
         "name": "New York State Office of Information Technology Services",
@@ -9,6 +9,7 @@
     },
     "repository": "https://github.com/ny/coreui",
     "dependencies": {
+        "async": "^2.1.4",
         "grunt": "^1.0.1",
         "grunt-banner": "^0.6.0",
         "grunt-contrib-clean": "^1.0.0",
@@ -18,14 +19,24 @@
         "grunt-contrib-cssmin": "^1.0.1",
         "grunt-contrib-jshint": "^1.0.0",
         "grunt-contrib-requirejs": "^1.0.0",
+        "grunt-contrib-uglify": "^2.0.0",
         "grunt-contrib-watch": "^1.0.0",
         "grunt-md2html": "^0.3.1",
         "grunt-sass": "^1.2.0",
         "grunt-sass-globbing": "^1.5.1",
         "grunt-svgmin": "^3.2.0",
         "handlebars": "^4.0.5",
+        "intern": "^3.4.2",
+        "jshint": "^2.9.4",
         "load-grunt-tasks": "^3.5.0",
-        "mkdirp": "^0.5.1"
+        "mkdirp": "^0.5.1",
+        "mkdirps": "0.0.0",
+        "node-handlebars": "^0.9.7",
+        "request": "^2.79.0",
+        "tcp-port-used": "^0.1.2",
+        "tree-kill": "^1.1.0",
+        "unzip2": "^0.2.5",
+        "xml2js": "^0.4.17"
     },
     "license": "MIT",
     "devDependencies": {}

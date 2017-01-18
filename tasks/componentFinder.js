@@ -1,5 +1,4 @@
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
     'use strict';
 
     /*
@@ -8,9 +7,7 @@ module.exports = function(grunt) {
      */
 
     // Constants
-    var TASK_DESCRIPTION = "Component Finder for Core UI.";
-
-    var defaults = {};
+    var TASK_DESCRIPTION = 'Component Finder for Core UI';
 
     // Step Manager
     var manager = require('./libs/stepManager/manager');
@@ -22,8 +19,7 @@ module.exports = function(grunt) {
     var process = require('./libs/componentFinder/process');
 
     // Define the Grunt Multitask for the Require Manager Task;
-    grunt.registerTask('componentFinder', TASK_DESCRIPTION, function() {
-
+    grunt.registerTask('componentFinder', TASK_DESCRIPTION, function () {
         var options = {
             srcFolder: 'src',
             rootFolders: ['cui', 'project'],
@@ -34,14 +30,15 @@ module.exports = function(grunt) {
             keyFiles: {
                 settings: 'asset.json',
                 build: 'Gruntfile.js',
-                pack: 'package.json'
+                pack: 'package.json',
             },
             excludes: {
                 folders: [
                     '.git',
                     'dist',
                     'node_modules',
-                    'tasks'
+                    'tasks',
+                    'tests',
                 ],
                 files: [
                     '_settings.scss',
@@ -58,21 +55,21 @@ module.exports = function(grunt) {
                     'old',
                     'db'
                 ],
-                tasks: [
+                buildTasks: [
                     'connect',
-                    'watch'
-                ]
-            }
+                    'watch',
+                    'intern',
+                ],
+            },
         };
 
         // Call the manager and execute the following steps.
         manager.init(this, grunt, options)
-            .step("Startup the component finder module", base.startup)
-            .step("Search for component folders", search.folders)
-            .step("Process component folders", process.folders)
-            .step("Build new grunt tasks for components with builds", build.tasks)
-            .step("Close down the component finder module", base.closedown)
+            .step('Startup the component finder module', base.startup)
+            .step('Search for component folders', search.folders)
+            .step('Process component folders', process.folders)
+            .step('Build new grunt tasks for components with builds', build.tasks)
+            .step('Close down the component finder module', base.closedown)
             .execute();
-
     });
 };

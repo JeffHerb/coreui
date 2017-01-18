@@ -5,7 +5,7 @@ define(['jquery', 'cui'], function ($, cui) {
     /////////////
     var NAMESPACE = 'uiPosition';
 
-    var VERSION = '1.0.0';
+    var VERSION = '1.0.1';
     var CLASSES = {
         uiPosition: 'cui-' + NAMESPACE,
     };
@@ -22,7 +22,7 @@ define(['jquery', 'cui'], function ($, cui) {
 
     var _priv = {};
 
-    _priv.resetPositioningStyles = function resetPositioningStyles(element, config) {
+    _priv.resetPositioningStyles = function resetPositioningStyles (element, config) {
         var maxWidth = '';
         var maxHeight = '';
 
@@ -51,7 +51,7 @@ define(['jquery', 'cui'], function ($, cui) {
         }
     };
 
-    _priv.adjustMaxHeight = function adjustMaxHeight(element, config) {
+    _priv.adjustMaxHeight = function adjustMaxHeight (element, config) {
         if (config.overrideMaxDimensions) {
             var maxHeight = '';
             var windowMaxHeight = '';
@@ -62,7 +62,7 @@ define(['jquery', 'cui'], function ($, cui) {
 
             windowMaxHeight = $(window).height() - 2 * CENTER_PADDING;
 
-            if ((typeof maxHeight !== 'number') || (windowMaxHeight<maxHeight)) {
+            if (typeof maxHeight !== 'number' || windowMaxHeight < maxHeight) {
                 maxHeight = windowMaxHeight;
             }
 
@@ -72,7 +72,7 @@ define(['jquery', 'cui'], function ($, cui) {
         }
     };
 
-    _priv.adjustMaxWidth = function adjustMaxWidth(element, config) {
+    _priv.adjustMaxWidth = function adjustMaxWidth (element, config) {
         if (config.overrideMaxDimensions) {
             var maxWidth = '';
             var windowMaxWidth = '';
@@ -236,7 +236,6 @@ define(['jquery', 'cui'], function ($, cui) {
             top: 0,
             left: 0,
         };
-
         var addedRightMargin = false;
         var windowWidth;
         var popoverWidth;
@@ -247,23 +246,18 @@ define(['jquery', 'cui'], function ($, cui) {
         var buttonHeight;
         var difference;
         var relativeMaxHeight;
-
         var availableSpaceAbove;
         var availableSpaceBelow;
-
         var offsetX = config.offset.offsetX;
         var offsetY = config.offset.offsetY;
 
         var __getRelativeMaxHeight = function _getRelativeMaxHeight (top, windowHeight, offset) {
-            var maxHeight = windowHeight - top - offset + $(window).scrollTop();
-
-            return maxHeight;
+            return (windowHeight - top - offset + $(window).scrollTop());
         };
 
         var __setCurrentPositionData = function __setCurrentPositionData (element, position) {
             $(element).data(NAMESPACE, {currentPosition: position});
         };
-
 
         /**
          * Determines the position based on the requested location, detects boundary collisions, and falls back to other locations if necessary

@@ -1,6 +1,6 @@
 {
     "name": "coreui-popover",
-    "version": "2.0.1",
+    "version": "2.0.3",
     "devDependencies": {
         "grunt": "^1.0.1",
         "grunt-contrib-clean": "^1.0.0",

@@ -103,6 +103,25 @@ module.exports = function (grunt) {
                 ],
             },
         },
+
+        // intern: {
+        //     functional: {
+        //         options: {
+        //             cwd: './',
+        //             runType: 'runner',
+        //             config: 'tests/intern',
+        //             reporters: [ 'Console' ],
+        //             basePath: './tests/journal/functional/',
+        //             functionalSuites: [
+        //                 'journal',
+        //             ],
+        //             tunnel: 'NullTunnel',
+        //             environments: [{
+        //                 browserName: 'chrome',
+        //             }],
+        //         }
+        //     }
+        // },
     });
 
     // Load all grunt tasks

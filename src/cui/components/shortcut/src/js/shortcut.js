@@ -4,7 +4,7 @@ define(['jquery', 'cui'], function ($, cui) {
     ///////////////
     // Constants //
     ///////////////
-    var VERSION = '0.1.0';
+    var VERSION = '0.1.1';
 
     var DEFAULT_SETTINGS = {
         // Provided by the user:
@@ -481,7 +481,7 @@ define(['jquery', 'cui'], function ($, cui) {
     ////////////////////
 
     priv.showLegend = function _showLegend () {
-        
+
         if(!legendVisible){
             var __createLegend = function __createLegend () {
                 var $header;

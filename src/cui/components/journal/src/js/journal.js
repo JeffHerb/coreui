@@ -1,5 +1,5 @@
 define(['jquery', 'kind'], function ($, kind) {
-    var VERSION = '0.0.1';
+    var VERSION = '0.0.2';
 
     var DEFAULT_SETTINGS = {
             type: 'log',   // Method of `console`

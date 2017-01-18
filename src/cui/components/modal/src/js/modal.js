@@ -5,7 +5,7 @@ define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function (
 
     var NAMESPACE = 'modal';
 
-    var VERSION = '3.0.0';
+    var VERSION = '3.0.2';
 
     var CLASSES = {
         hidden: 'cui-hidden',

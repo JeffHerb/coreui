@@ -41,6 +41,10 @@ module.exports = function (grunt) {
                 'dist',
                 'docs',
             ],
+            testReports:[
+                'tests/finalReport.txt',
+                'tests/*/report.xml',
+            ],
         },
 
         concat: {
@@ -466,6 +470,7 @@ module.exports = function (grunt) {
 
     // Load local tasks
     grunt.loadTasks('tasks');
+    grunt.loadNpmTasks('intern');
 
     // Production build
     grunt.registerTask('prod', 'Production', function (args) {
@@ -547,6 +552,15 @@ module.exports = function (grunt) {
             'usebanner',
             'watch',
             'connect',
+        ]);
+    });
+
+    // Run tests
+    grunt.registerTask('test', 'Runs test suite', function (args) {
+        grunt.config.set('test', true);
+
+        grunt.task.run([
+            'testManager',
         ]);
     });
 

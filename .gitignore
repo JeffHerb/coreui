@@ -22,6 +22,7 @@ tasks/libs/componentFinder/temp
 tasks/libs/configDebug/logs
 tasks/libs/requireManager/logs
 tasks/libs/requireManager/temp
+tasks/libs/testManager/selenium
 
 # Editor and system files
 *.sublime-*

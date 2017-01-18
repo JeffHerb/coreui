@@ -134,6 +134,25 @@ module.exports = function (grunt) {
                 ],
             },
         },
+
+        intern: {
+            functional: {
+                options: {
+                    cwd: './',
+                    runType: 'runner',
+                    config: 'tests/intern',
+                    reporters: [ 'Console' ],
+                    basePath: './tests/popover/functional/',
+                    functionalSuites: [
+                        'popover',
+                    ],
+                    tunnel: 'NullTunnel',
+                    environments: [{
+                        browserName: 'chrome',
+                    }],
+                },
+            }
+        },
     });
 
     // Load all Grunt plugins

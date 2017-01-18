@@ -1,6 +1,6 @@
 {
-    "name": "frg-empire-journal",
-    "version": "0.0.1",
+    "name": "coreui-journal",
+    "version": "0.0.2",
     "devDependencies": {
         "grunt": "^1.0.1",
         "grunt-contrib-clean": "^1.0.0",

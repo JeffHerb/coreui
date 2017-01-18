@@ -91,7 +91,7 @@ var process = function _process() {
 
             })(files, 0);
 
-            // Check to see fi we have a setting file
+            // Check to see if we have a setting file
             if (componentDef.settings !== false) {
 
                 // Check to see if the developer has disabled a module/component

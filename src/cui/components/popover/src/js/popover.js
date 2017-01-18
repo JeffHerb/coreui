@@ -3,7 +3,7 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
     // Constants //
     ///////////////
 
-    var VERSION = '2.0.2';
+    var VERSION = '2.0.3';
     var NAMESPACE = 'popover';
 
     var EVENT_NAMES = {

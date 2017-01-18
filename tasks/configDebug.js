@@ -1,5 +1,4 @@
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
     'use strict';
 
     /*
@@ -7,7 +6,7 @@ module.exports = function(grunt) {
      */
 
     // Constants
-    var TASK_DESCRIPTION = "Get additional information from the config debug too.";
+    var TASK_DESCRIPTION = 'Get additional information from the config debug too.';
 
     // Step Manager
     var manager = require('./libs/stepManager/manager');
@@ -16,14 +15,12 @@ module.exports = function(grunt) {
     var output = require('./libs/configDebug/output');
 
     // Define the Grunt Multitask for the Require Manager Task;
-    grunt.registerTask('configDebug', TASK_DESCRIPTION, function() {
-
-        var options = {}
+    grunt.registerTask('configDebug', TASK_DESCRIPTION, function () {
+        var options = {};
 
         // Call the manager and execute the following steps.
         manager.init(this, grunt, options)
-            .step("Startup the component finder module", output.gruntConfig)
+            .step('Startup the component finder module', output.gruntConfig)
             .execute();
-
     });
 };
