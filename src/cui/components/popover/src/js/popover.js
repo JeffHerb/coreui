@@ -630,8 +630,8 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
         }
 
         popover.$popover.css({
-                            height: defaultWidth,
-                            width: defaultHeight,
+                            width: defaultWidth,
+                            height: defaultHeight,
                         });
     };
 
