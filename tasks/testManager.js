@@ -65,6 +65,11 @@ module.exports = function (grunt) {
 			}
 		};
 
+        // Remove path module if it is present
+        grunt.task.run([
+            'clean:test'
+        ]);
+
         if(grunt.option('testQuiet')){
             console.log('Quiet run, disabling the Grunt log until the intern tasks are run. console.log will still display.\n');
 
