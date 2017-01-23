@@ -41,6 +41,9 @@ module.exports = function (grunt) {
                 'dist',
                 'docs',
             ],
+            test: [
+                'node_modules/path'
+            ],
             testReports:[
                 'tests/finalReport.txt',
                 'tests/*/report.xml',
