@@ -423,7 +423,7 @@ define(['jquery', 'cui'], function ($, cui) {
                 difference = windowWidth - (Math.ceil(position.left) + Math.ceil(popoverWidth) + (2 * REL_PADDING) + 2);
 
                 // Condition: clipped by the top of the window
-                if (position.top < 0) {
+                if (position.top < $(window).scrollTop()) {
                     // It doesn't matter if it is also clipped by the right edge. While we could fix the `left` value easily (see next condition), our only recourse for `top` is to fallback to a safe location
                     position = __determinePosition('below-right', position);
                 }
@@ -500,7 +500,7 @@ define(['jquery', 'cui'], function ($, cui) {
                 // We do not need to check for combinations (e.g. clipped by the right and top edges) because our fallback for `top` will handle any horizontal issues
 
                 // 1. Clipped by the top edge
-                if (position.top < 0) {
+                if (position.top < $(window).scrollTop()) {
                     // If the top is broken we are forced to move the popover below the button. There's no point looking into whether it also fails the left or right edge since our fallback will take care of that.
                     __getTopAndLeft('below-center');
                     position = __determinePosition('below-center', position);
