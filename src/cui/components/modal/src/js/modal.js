@@ -1,4 +1,4 @@
-define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', 'css!modal'], function ($, cui, guid) {
+define(['jquery', 'cui', 'guid', 'uiBox', 'uiPosition', /*'css!modal'*/], function ($, cui, guid) {
     /////////////
     // Globals //
     /////////////
