@@ -142,12 +142,6 @@ legend {
         padding-right: 0;
         margin-right: $cui-field-space-between-field-elements; // Space between adjacent containers
 
-        /*DEBUG - START*/
-        // display:flex;
-        // max-width:100%;
-        // min-width:1px;
-        /*DEBUG - END*/
-
         // Apply the same styles that `<legend>` gets in any context (further up in this file)
         .cui-desc,
         label {
@@ -155,17 +149,23 @@ legend {
             white-space: normal;
         }
 
-        /*DEBUG - START*/
+        // Apply margin to input fields since we are clearing the browsers default spacing.
         input + label + input[type="text"]{
           margin-left:$cui-input-padding-left;
         }
 
+        input + label + input[type="radio"],
+        input + input[type="radio"]{
+          margin-left:$cui-input-padding-left;
+          margin-right:$cui-input-padding-right;
+        }
+
+        // Allows with to be respected when using flexbox
         input[type="text"],
         textarea{
             max-width:100%;
             min-width:1px;
         }
-        /*DEBUG - END*/
     }
 
     .cui-label {
@@ -180,9 +180,10 @@ legend {
     }
 
     .cui-controls {
-        /*DEBUG - START*/
+
+        // Give controls a lower space allocation than the other fields.
         flex:0 2 auto;
-        /*DEBUG - END*/
+
         display: flex;
         align-items: baseline;
         flex-wrap: wrap;
@@ -192,9 +193,8 @@ legend {
             &:not(:last-child) {
                 margin-right: $cui-field-space-between-controls;
             }
-            /*DEBUG - START*/
+            //Allow flexbox sizing to apply to all children.
             display:flex;
-            /*DEBUG - END*/
         }
 
         // Smaller text buttons (excluding icon buttons)
@@ -206,10 +206,11 @@ legend {
     }
 
     .cui-data {
-        /*DEBUG - START*/
+
+        // Needed for elements to apply flexbox sizing
         min-width:1%;
         display:flex;
-        /*DEBUG - END*/
+
         .cui-desc,
         label {
             display: inline-block;
@@ -240,6 +241,28 @@ legend {
     // Other layouts can be added here by changing `order` for the applicable flexbox column(s)
 }
 
+@include pointbreak-max($cui-bp-inline-labels) {
+    form section fieldset{
+        min-width: 1%;
+    }
+
+    input[type="text"],
+    textarea,
+    select{
+        max-width:100%;
+        min-width:1px;
+    }
+
+    .cui-field {
+        .cui-label,
+        .cui-data,
+        .cui-controls {
+            flex-wrap:wrap;
+            min-width:1%;
+            display:flex;
+        }
+    }
+}
 
 // * @section    Fields with inline label and data on the same line
 // * @desc       The label and data text wrap independently
@@ -271,6 +294,7 @@ legend {
 
             .cui-data {
                 line-height: normal;
+                flex-wrap:wrap;
             }
 
             .cui-value {
@@ -278,9 +302,7 @@ legend {
             }
 
             .cui-controls {
-                /*DEBUG - START*/
-                flex:0 2 auto;
-                /*DEBUG - END*/
+                flex:0 2 auto; // Give controls wrapper less space compared to information fields.
                 flex-wrap: wrap; // This is typically needed on small/medium screens when there are multiple controls next to a fixed-width field such as currency input. Without this style, the `cui-controls` element would spill outside of the field and likely give the page a horizontal scrollbar.
             }
 
@@ -305,7 +327,7 @@ legend {
         }
     }
 
-    @include pointbreak($cui-bp-medium) {
+    @include pointbreak($cui-bp-large) {
         .cui-inline-field {
             .cui-field {
                 .cui-data + .cui-controls {
@@ -405,10 +427,7 @@ legend {
 .cui-input-wrapper {
     display: flex;
     border-collapse: separate; // Prevent input groups from inheriting border styles from table cells when placed within a `<table>`
-
-    /*DEBUG - START*/
     max-width:100%;
-    /*DEBUG - END*/
 
     input,
     select,
