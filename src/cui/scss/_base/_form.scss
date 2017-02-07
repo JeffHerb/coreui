@@ -142,12 +142,30 @@ legend {
         padding-right: 0;
         margin-right: $cui-field-space-between-field-elements; // Space between adjacent containers
 
+        /*DEBUG - START*/
+        // display:flex;
+        // max-width:100%;
+        // min-width:1px;
+        /*DEBUG - END*/
+
         // Apply the same styles that `<legend>` gets in any context (further up in this file)
         .cui-desc,
         label {
             display: inline-block;
             white-space: normal;
         }
+
+        /*DEBUG - START*/
+        input + label + input[type="text"]{
+          margin-left:$cui-input-padding-left;
+        }
+
+        input[type="text"],
+        textarea{
+            max-width:100%;
+            min-width:1px;
+        }
+        /*DEBUG - END*/
     }
 
     .cui-label {
@@ -162,6 +180,9 @@ legend {
     }
 
     .cui-controls {
+        /*DEBUG - START*/
+        flex:0 2 auto;
+        /*DEBUG - END*/
         display: flex;
         align-items: baseline;
         flex-wrap: wrap;
@@ -171,6 +192,9 @@ legend {
             &:not(:last-child) {
                 margin-right: $cui-field-space-between-controls;
             }
+            /*DEBUG - START*/
+            display:flex;
+            /*DEBUG - END*/
         }
 
         // Smaller text buttons (excluding icon buttons)
@@ -182,6 +206,10 @@ legend {
     }
 
     .cui-data {
+        /*DEBUG - START*/
+        min-width:1%;
+        display:flex;
+        /*DEBUG - END*/
         .cui-desc,
         label {
             display: inline-block;
@@ -250,6 +278,9 @@ legend {
             }
 
             .cui-controls {
+                /*DEBUG - START*/
+                flex:0 2 auto;
+                /*DEBUG - END*/
                 flex-wrap: wrap; // This is typically needed on small/medium screens when there are multiple controls next to a fixed-width field such as currency input. Without this style, the `cui-controls` element would spill outside of the field and likely give the page a horizontal scrollbar.
             }
 
@@ -374,6 +405,10 @@ legend {
 .cui-input-wrapper {
     display: flex;
     border-collapse: separate; // Prevent input groups from inheriting border styles from table cells when placed within a `<table>`
+
+    /*DEBUG - START*/
+    max-width:100%;
+    /*DEBUG - END*/
 
     input,
     select,
