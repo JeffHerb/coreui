@@ -166,6 +166,13 @@ legend {
             max-width:100%;
             min-width:1px;
         }
+
+        button:before,
+        button:after {
+            content: '';
+            flex: 1 0 auto;
+            min-width:1%;
+        }
     }
 
     .cui-label {
@@ -180,10 +187,6 @@ legend {
     }
 
     .cui-controls {
-
-        // Give controls a lower space allocation than the other fields.
-        flex:0 2 auto;
-
         display: flex;
         align-items: baseline;
         flex-wrap: wrap;
@@ -193,8 +196,6 @@ legend {
             &:not(:last-child) {
                 margin-right: $cui-field-space-between-controls;
             }
-            //Allow flexbox sizing to apply to all children.
-            display:flex;
         }
 
         // Smaller text buttons (excluding icon buttons)
@@ -203,6 +204,12 @@ legend {
             line-height: $cui-field-line-height;
             margin-bottom: 0.5em; // If the buttons wrap, this puts some space between them
         }
+
+        button::before,
+        button::after {
+            content: '';
+            flex: 1 0 auto;
+        }
     }
 
     .cui-data {
@@ -210,6 +217,7 @@ legend {
         // Needed for elements to apply flexbox sizing
         min-width:1%;
         display:flex;
+        align-items:baseline;
 
         .cui-desc,
         label {
@@ -302,7 +310,6 @@ legend {
             }
 
             .cui-controls {
-                flex:0 2 auto; // Give controls wrapper less space compared to information fields.
                 flex-wrap: wrap; // This is typically needed on small/medium screens when there are multiple controls next to a fixed-width field such as currency input. Without this style, the `cui-controls` element would spill outside of the field and likely give the page a horizontal scrollbar.
             }
 
