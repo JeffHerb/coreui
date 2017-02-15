@@ -148,6 +148,31 @@ legend {
             display: inline-block;
             white-space: normal;
         }
+
+        // Apply margin to input fields since we are clearing the browsers default spacing.
+        input + label + input[type="text"]{
+          margin-left:$cui-input-padding-left;
+        }
+
+        input + label + input[type="radio"],
+        input + input[type="radio"]{
+          margin-left:$cui-input-padding-left;
+          margin-right:$cui-input-padding-right;
+        }
+
+        // Allows with to be respected when using flexbox
+        input[type="text"],
+        textarea{
+            max-width:100%;
+            min-width:1px;
+        }
+
+        button:before,
+        button:after {
+            content: '';
+            flex: 1 0 auto;
+            min-width:1%;
+        }
     }
 
     .cui-label {
@@ -179,9 +204,21 @@ legend {
             line-height: $cui-field-line-height;
             margin-bottom: 0.5em; // If the buttons wrap, this puts some space between them
         }
+
+        button::before,
+        button::after {
+            content: '';
+            flex: 1 0 auto;
+        }
     }
 
     .cui-data {
+
+        // Needed for elements to apply flexbox sizing
+        min-width:1%;
+        display:flex;
+        align-items:baseline;
+
         .cui-desc,
         label {
             display: inline-block;
@@ -212,6 +249,28 @@ legend {
     // Other layouts can be added here by changing `order` for the applicable flexbox column(s)
 }
 
+@include pointbreak-max($cui-bp-inline-labels) {
+    form section fieldset{
+        min-width: 1%;
+    }
+
+    input[type="text"],
+    textarea,
+    select{
+        max-width:100%;
+        min-width:1px;
+    }
+
+    .cui-field {
+        .cui-label,
+        .cui-data,
+        .cui-controls {
+            flex-wrap:wrap;
+            min-width:1%;
+            display:flex;
+        }
+    }
+}
 
 // * @section    Fields with inline label and data on the same line
 // * @desc       The label and data text wrap independently
@@ -243,6 +302,7 @@ legend {
 
             .cui-data {
                 line-height: normal;
+                flex-wrap:wrap;
             }
 
             .cui-value {
@@ -274,7 +334,7 @@ legend {
         }
     }
 
-    @include pointbreak($cui-bp-medium) {
+    @include pointbreak($cui-bp-large) {
         .cui-inline-field {
             .cui-field {
                 .cui-data + .cui-controls {
@@ -374,6 +434,7 @@ legend {
 .cui-input-wrapper {
     display: flex;
     border-collapse: separate; // Prevent input groups from inheriting border styles from table cells when placed within a `<table>`
+    max-width:100%;
 
     input,
     select,

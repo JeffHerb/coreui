@@ -265,7 +265,7 @@ $cui-grid-breakpoints: (
 );
 
 // Other breakpoints
-$cui-bp-inline-labels: $cui-bp-medium !default; // Below this point, inline labels will not be inline (i.e., labels will display above the data even if you use `.cui-inline-field`). This is helpful if you want to force labels to display above the data on smaller screens. To disable the feature and allow inline labels at any screen size, set this variable to `0`.
+$cui-bp-inline-labels: $cui-bp-large !default; // Below this point, inline labels will not be inline (i.e., labels will display above the data even if you use `.cui-inline-field`). This is helpful if you want to force labels to display above the data on smaller screens. To disable the feature and allow inline labels at any screen size, set this variable to `0`.
 
 
 // * @section    Print
