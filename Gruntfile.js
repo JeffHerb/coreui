@@ -404,42 +404,42 @@ module.exports = function (grunt) {
             },
 
             // Core component styles
-            styles: {
-                files: [
-                    'src/cui/components/**/*.scss',
-                ],
-                tasks: [
-                    'clean',
-                    // 'md2html',
-                    // 'componentFinder',
-                    // 'copy',
-                    // 'svgmin',
-                    'sass',
-                    // 'requirejs',
-                    'concat:css',
-                    // 'copy',
-                    'usebanner',
-                ],
-            },
+            // styles: {
+            //     files: [
+            //         'src/cui/components/**/*.scss',
+            //     ],
+            //     tasks: [
+            //         'clean',
+            //         // 'md2html',
+            //         // 'componentFinder',
+            //         // 'copy',
+            //         // 'svgmin',
+            //         'sass',
+            //         // 'requirejs',
+            //         'concat:css',
+            //         // 'copy',
+            //         'usebanner',
+            //     ],
+            // },
 
-            // Core component scripts
-            styles: {
-                files: [
-                    'src/cui/components/**/*.scss',
-                ],
-                tasks: [
-                    'clean',
-                    // 'md2html',
-                    'componentFinder',
-                    // 'copy',
-                    // 'svgmin',
-                    // 'sass',
-                    'requirejs',
-                    'concat:js',
-                    // 'copy',
-                    'usebanner',
-                ],
-            },
+            // // Core component scripts
+            // styles: {
+            //     files: [
+            //         'src/cui/components/**/*.scss',
+            //     ],
+            //     tasks: [
+            //         'clean',
+            //         // 'md2html',
+            //         'componentFinder',
+            //         // 'copy',
+            //         // 'svgmin',
+            //         // 'sass',
+            //         'requirejs',
+            //         'concat:js',
+            //         // 'copy',
+            //         'usebanner',
+            //     ],
+            // },
 
             // Project HTML
             html: {
