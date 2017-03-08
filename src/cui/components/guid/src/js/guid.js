@@ -2,9 +2,10 @@ define([], function () {
     // Private method namespace
     var priv = {};
 
-    ///////////////////
-    // Public method //
-    ///////////////////
+
+    ////////////////////
+    // Public methods //
+    ////////////////////
 
     /**
      * Generates a random ID, or ensures an element has an ID and then returns it
@@ -28,9 +29,11 @@ define([], function () {
             // Randomly generate an ID
             id = priv.stringOf4RandChars();
 
-            // Try again if this ID is already in use
+            // Try again if this ID is already in use in the DOM
             if (document.getElementById(id)) {
-                id = priv.stringOf4RandChars();
+                priv.usedIDs.push(id);
+
+                return _guid(elem);
             }
 
             // Assign the ID to the element
@@ -46,9 +49,17 @@ define([], function () {
         }
     };
 
+
     /////////////////////
     // Private methods //
     /////////////////////
+
+    /**
+     * Stores IDs that have been generated so we can ensure they're not re-used
+     *
+     * @type  {Array}
+     */
+    priv.usedIDs = [];
 
     /**
      * Generates a string of four random numbers and letters
@@ -56,7 +67,16 @@ define([], function () {
      * @return  {String}  Four-character string
      */
     priv.stringOf4RandChars = function _stringOf4RandChars () {
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        var result = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+
+        // Try again if this ID is already in use
+        if (priv.usedIDs.indexOf(result) !== -1) {
+            return priv.stringOf4RandChars();
+        }
+
+        priv.usedIDs.push(result);
+
+        return result;
     };
 
     /////////////////////
