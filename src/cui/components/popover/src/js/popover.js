@@ -175,7 +175,7 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
             priv.onWindowResize(evt, popover);
         }.bind(popover);
 
-        $window.on('resize', popover.onResize);
+        $window.on('resize', popover.onWindowResize);
 
         // Adds this Popover instance to our list so we can track all of them
         popoverList[popover.id] = popover;
