@@ -18,8 +18,14 @@
     line-height: normal;
 
     &,
+    ol,
     ul {
         list-style: none outside none;
+    }
+
+    ol,
+    ul {
+        width: 100%;
     }
 
     .cui-error,
@@ -32,7 +38,7 @@
         &:before {
             content: "";
             position: absolute;
-            top: 0.2em;
+            top: 0.35em;
             left: 0.2em;
             display: block;
             width: 24px;
