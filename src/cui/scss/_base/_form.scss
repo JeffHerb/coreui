@@ -23,10 +23,13 @@ select {
     border: $cui-input-border;
     padding: $cui-input-padding;
     color: $cui-color-dark-gray;
-    @include input-shadow;
     @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
 
-    &:focus{
+    &:not([type="checkbox"]):not([type="radio"]) {
+        @include input-shadow;
+    }
+
+    &:focus {
         border-color: $cui-input-border-color-focus;
         box-shadow: $cui-input-boxshadow-focus;
         outline: 0;
@@ -42,6 +45,16 @@ input[type="radio"] {
     position: relative;
     top: 1px;
     line-height: $cui-field-line-height;
+
+    .cui-field:not(.cui-selection-group) & {
+        width: 16px;
+        height: 16px;
+
+        & + label {
+            padding-left: 6px;
+            padding-right: 12px;
+        }
+    }
 }
 
 input[type="checkbox"],
@@ -151,13 +164,12 @@ legend {
 
         // Apply margin to input fields since we are clearing the browsers default spacing.
         input + label + input[type="text"]{
-          margin-left:$cui-input-padding-left;
+          margin-left: $cui-input-padding-left;
         }
 
         input + label + input[type="radio"],
-        input + input[type="radio"]{
-          margin-left:$cui-input-padding-left;
-          margin-right:$cui-input-padding-right;
+        input + input[type="radio"] {
+          margin-left: $cui-input-padding-left;
         }
 
         // Allows with to be respected when using flexbox
@@ -396,16 +408,98 @@ legend {
             @include hide;
         }
 
-        // Highlighted label
-        input:checked + label {
-            background-color: $cui-input-bg-hover-color; // Color matches buttons styles
+        // Check box label
+        input[type="checkbox"] + label {
+            padding-left: 28px;
+            position: relative;
 
-            &:hover {
-                background-color: $cui-button-bg-color; // Color matches buttons
+            // Check mark container
+            &::before {
+                content: "";
+                position: absolute;
+                top: calc(50% - 8px);
+                left: 6px;
+                width: 16px;
+                height: 16px;
+                border: $cui-input-border;
+                border-color: lighten($cui-input-color, 30%);
+                border-radius: $cui-border-radius / 2;
             }
 
+            // Check mark
+            &::after {
+                // Container is empty by default
+                display: none;
+
+                // These properties will apply when the box is checked
+                content: "";
+                background-image: url("#{$cui-images-path}read-only-check-blue.svg");
+                background-size: 16px 16px;
+                position: absolute;
+                top: calc(50% - 10px);
+                left: 8px;
+                width: 16px;
+                height: 16px;
+                color: $cui-link-color;
+                font-weight: bold;
+            }
+        }
+
+        // Radio button label
+        input[type="radio"] + label {
+            padding-left: 28px;
+            position: relative;
+
+            // Outer circle
+            &::before {
+                content: "";
+                position: absolute;
+                top: calc(50% - 8px);
+                left: 6px;
+                width: 16px;
+                height: 16px;
+                border: $cui-input-border;
+                border-color: $cui-input-color;
+                border-radius: 50%;
+            }
+
+            // Fill circle
+            &::after {
+                // Container is empty by default
+                display: none;
+
+                // These properties will apply when the box is checked
+                content: "";
+                position: absolute;
+                top: calc(50% - 5px);
+                left: 9px;
+                width: 10px;
+                height: 10px;
+                background-color: $cui-link-color;
+                border-radius: 50%;
+            }
+        }
+
+        // Highlighted label
+        input[type="checkbox"]:checked + label,
+        input[type="radio"]:checked + label {
+            background-color: lighten($cui-link-color, 45%);
+
+            &::before {
+                border-color: darken($cui-link-color, 10%);
+            }
+
+            &::after {
+                display: block;
+            }
+        }
+
+        // Any label
+        input[type="checkbox"] + label,
+        input[type="radio"] + label {
             &:active {
                 @include button-primary-active;
+                background-color: $cui-link-color;
             }
         }
     }
