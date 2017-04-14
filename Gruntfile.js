@@ -147,18 +147,18 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
+                        cwd: 'src/project/docs',
+                        src: ['**/*.*'],
+                        dest: 'docs/project',
+                        filter: 'isFile',
+                    },
+                    {
+                        expand: true,
                         cwd: 'src/cui/docs/src/assets/css',
                         src: ['**/*.css'],
                         dest: 'docs/assets/css',
                         filter: 'isFile',
                         flatten: true,
-                    },
-                    {
-                        expand: true,
-                        cwd: 'src/project/docs',
-                        src: ['**/*.*'],
-                        dest: 'docs/project',
-                        filter: 'isFile',
                     },
                     {
                         expand: true,
@@ -270,6 +270,18 @@ module.exports = function (grunt) {
                     style: 'github',
                     compressStyle: true,
                 },
+            },
+            cuiDocs: {
+                options: {
+                    layout: 'src/cui/docs/src/assets/templates/default.html',
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'src/cui/docs',
+                    src: ['**/*.md'],
+                    dest: 'docs/coreui',
+                    ext: '.html',
+                }],
             },
             docs: {
                 options: {
@@ -402,44 +414,6 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['sass:main'],
             },
-
-            // Core component styles
-            // styles: {
-            //     files: [
-            //         'src/cui/components/**/*.scss',
-            //     ],
-            //     tasks: [
-            //         'clean',
-            //         // 'md2html',
-            //         // 'componentFinder',
-            //         // 'copy',
-            //         // 'svgmin',
-            //         'sass',
-            //         // 'requirejs',
-            //         'concat:css',
-            //         // 'copy',
-            //         'usebanner',
-            //     ],
-            // },
-
-            // // Core component scripts
-            // styles: {
-            //     files: [
-            //         'src/cui/components/**/*.scss',
-            //     ],
-            //     tasks: [
-            //         'clean',
-            //         // 'md2html',
-            //         'componentFinder',
-            //         // 'copy',
-            //         // 'svgmin',
-            //         // 'sass',
-            //         'requirejs',
-            //         'concat:js',
-            //         // 'copy',
-            //         'usebanner',
-            //     ],
-            // },
 
             // Project HTML
             html: {

@@ -1,7 +1,7 @@
 {
     "name": "coreui",
     "title": "Core UI",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "description": "Core UI Frontend Framework",
     "author": {
         "name": "New York State Office of Information Technology Services",
@@ -10,7 +10,12 @@
     "repository": "https://github.com/ny/coreui",
     "dependencies": {
         "async": "^2.3.0",
+        "babel-plugin-array-includes": "^2.0.3",
+        "babel-plugin-transform-object-assign": "^6.22.0",
+        "babel-preset-es2015-without-strict": "0.0.4",
+        "babel-preset-react": "^6.24.1",
         "grunt": "^1.0.1",
+        "grunt-babel": "^6.0.0",
         "grunt-banner": "^0.6.0",
         "grunt-contrib-clean": "^1.1.0",
         "grunt-contrib-concat": "^1.0.1",
@@ -39,6 +44,12 @@
         "xml2js": "^0.4.17"
     },
     "license": "MIT",
-    "devDependencies": {}
+    "devDependencies": {
+        "babel-eslint": "^7.2.2",
+        "eslint": "^3.19.0",
+        "eslint-config-airbnb": "^14.1.0",
+        "eslint-plugin-import": "^2.2.0",
+        "eslint-plugin-jsx-a11y": "^4.0.0",
+        "eslint-plugin-react": "^6.10.3"
+    }
 }
-
