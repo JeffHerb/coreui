@@ -1,0 +1,41 @@
+// Core settings
+@import "../../../../../cui/scss/_settings";
+@import "../../../../../cui/scss/_utilities/_mixins";
+// Implementer settings
+@import "../../_settings";
+// Project settings
+@import "../../../../scss/_settings";
+// Component settings
+@import "_utilities/_variables";
+
+
+// Component styles:
+
+ul.cui-messages{
+    display:block;
+    flex: 0 1 auto;
+    position: relative;
+    margin: 0.75em 0em 0.75em 0em;
+    padding: 0;
+    min-height: 1.5em;
+    width: 100%;
+    list-style: none outside none;
+
+
+    & li{
+        width:100%;
+        display:block;
+        padding: 0.4em 1em 0.4em 2em;
+        line-height: normal;
+    }
+
+    & li:before{
+        content: "";
+        position: absolute;
+        top: 0.2em;
+        left: 0.2em;
+        display: block;
+        width: 24px;
+        height: 24px;
+    }
+}

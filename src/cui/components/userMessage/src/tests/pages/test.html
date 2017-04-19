@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title>User Message Test - Core UI</title>
+    <link href="/dist/css/main.css" rel="stylesheet" type="text/css" media="all">
+<style>
+body{
+    padding:15px;
+}
+/*#main{
+    padding-bottom:2000px;
+}*/
+
+.control-section .cui-row{
+    margin-bottom:0;
+}
+</style>
+
+</head>
+<body>
+    <!-- Skip navigation for accessibility purposes -->
+    <div class="cui-hide-from-screen">
+        <a href="#nav">Go to navigation</a>
+        <a href="#main">Go to content</a>
+    </div>
+    <header class="cui-row">
+        <div class="cui-col-small-12">
+            <h1>Core UI</h1>
+        </div>
+        <div class="cui-col-small-12">
+            <h2>User Messages</h2>
+        </div>
+    </header>
+    <div id="body-wrapper">
+        <ul class="cui-messages">
+            <li class="cui-success">HTML - Retreive Message.</li>
+        </ul>
+        <main role="main" id="main">
+            <form name="form_content" id="form_content" action="www.ny.gov" method="post">
+
+
+                <section class="control-section">
+
+                    <div class="cui-row">
+                        <div class="cui-col">
+                            <div class="cui-field">
+                                <div class="cui-field-main">
+                                    <div class="cui-controls">
+                                        <button type="button" onClick="addSuccess()" class="cui-button">Page Success</button>
+                                        <button type="button" onClick="addWarning()" class="cui-button">Page Warning</button>
+                                        <button type="button" onClick="addError()" class="cui-button">Page Error</button>
+                                        <button type="button" onClick="addInformational()" class="cui-button">Page Informational</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cui-row">
+                        <div class="cui-col">
+                            <div class="cui-field">
+                                <div class="cui-field-main">
+                                    <div class="cui-controls">
+                                        <button type="button" onClick="addSuccess('success1')" class="cui-button">Page Success w/id</button>
+                                        <button type="button" onClick="addWarning('warn1')" class="cui-button">Page Warning w/id</button>
+                                        <button type="button" onClick="addError('error1')" class="cui-button">Page Error w/id</button>
+                                        <button type="button" onClick="addInformational('info1')" class="cui-button">Page Informational w/id</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cui-row">
+                        <div class="cui-col">
+                            <div class="cui-field">
+                                <div class="cui-field-main">
+                                    <div class="cui-controls">
+                                        <button type="button" onClick="addSuccessField('sField')" class="cui-button">Field Success w/id</button>
+                                        <button type="button" onClick="addWarningField('wField')" class="cui-button">Field Warning w/id</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cui-row">
+                        <div class="cui-col">
+                            <div class="cui-field">
+                                <div class="cui-field-main">
+                                    <div class="cui-controls">
+                                        <button type="button" onClick="removeMessage(0)" class="cui-button">Remove Message 0</button>
+                                        <button type="button" onClick="removeMessage(1)" class="cui-button">Remove Message 1</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </section>
+
+
+                <hr/>
+                <section>
+                    <div class="cui-row">
+                        <div class="cui-col">
+                            <fieldset>
+                                <div class="cui-field cui-required">
+                                    <div class="cui-field-main">
+                                        <div class="cui-label">
+                                            <legend class="cui-desc">Name:</legend>
+                                        </div>
+                                        <div class="cui-data">
+                                            <label for="name_first" class="cui-hide-from-screen">First</label>
+                                            <input type="text" class="cui-value" id="name_first" size="15" maxlength="20" value="John" tabindex="1">
+                                            <label for="name_middle" class="cui-hide-from-screen">Middle initial</label>
+                                            <input type="text" class="cui-value" id="name_middle" size="1" maxlength="1" value="Q" tabindex="1">
+                                            <label for="name_last" class="cui-hide-from-screen">Last</label>
+                                            <input type="text" class="cui-value" id="name_last" size="20" maxlength="30" value="Public" tabindex="1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="cui-row">
+                        <div class="cui-col">
+                            <div class="cui-field">
+                                <div class="cui-field-main">
+                                    <div class="cui-label">
+                                        <label for="taxType" class="cui-desc">Input:</label>
+                                    </div>
+                                    <div class="cui-data">
+                                            <label for="taxType" class="cui-hide-from-screen">Input</label>
+                                            <input type="text" class="cui-value" id="taxType" size="15" maxlength="20" value="John" tabindex="1">
+
+                                    </div>
+                                    <div class="cui-controls">
+                                        <button type="button" class="cui-button">Control</button>
+                                    </div>
+
+                                </div>
+                                <ul class="cui-messages cui-field-message">
+                                    <li class="cui-informational" id="replacement">HTML - This field had a HTML message, it should be replaced.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+            </form>
+            <hr>
+        </main>
+    </div>
+    <script id="require" src="/dist/js/main.js"></script>
+    <script>
+    var mydata = {};
+        require(['jquery', 'cui', 'uiBox', 'modal', 'popover', 'userMessage', 'domReady!',  ], function($, cui, uiBox, modal, popover, userMessage) {
+            window.userMessage = userMessage;
+            userMessage.init();
+
+            //Expose userMessage component for testing.
+            window.userMessage = userMessage;
+
+            window.successCount = 1;
+            window.addSuccess = function(id){
+                userMessage.create({
+                    "page": [
+                        {
+                            "template": "message",
+                            "type": "success",
+                            "text": "Sample success message. -" + window.successCount,
+                            "parameters":{
+                                "id":id
+                            }
+                        }
+                    ]
+                });
+                window.successCount++;
+            };
+
+            window.addSuccessField = function(id){
+                userMessage.create({
+                    "field": [
+                        {
+                            "elem": "#taxType",
+                            "parameters": {
+                                "reveal": revealFunction,
+                                "suppressPageNotifier": "false",
+                                "scroll": "true"
+                            },
+                            "messages": [
+                                {
+                                    "template": "message",
+                                    "type": "success",
+                                    "text": "Sample Success Message.",
+                                    "parameters":{
+                                        "id": id                                    }
+                                }
+                            ]
+                        },
+                    ]
+                });
+            };
+
+            window.addWarning = function(id){
+                userMessage.create({
+                    "page": [
+                        {
+                            "template": "message",
+                            "type": "warning",
+                            "text": "Sample warning message.",
+                            "parameters":{
+                                "id":id
+                            }
+                        }
+                    ]
+                });
+            };
+
+            window.addWarningField = function(id){
+                userMessage.create({
+                    "field": [
+                        {
+                            "elem": "#taxType",
+                            "parameters": {
+                                "reveal": revealFunction,
+                                "suppressPageNotifier": "false",
+                                "scroll": "true"
+                            },
+                            "messages": [
+                                {
+                                    "template": "message",
+                                    "type": "warning",
+                                    "text": "Sample Warning Message.",
+                                    "parameters":{
+                                        "id": id
+                                    }
+                                }
+                            ]
+                        },
+                    ]
+                });
+            };
+
+            window.addError = function(id){
+                userMessage.create({
+                    "page": [
+                        {
+                            "template": "message",
+                            "type": "error",
+                            "text": "Sample error message.",
+                            "parameters":{
+                                "id":id
+                            }
+                        }
+                    ]
+                });
+            };
+            window.addInformational = function(id){
+                userMessage.create({
+                    "page": [
+                        {
+                            "template": "message",
+                            "type": "informational",
+                            "text": "Sample informational message.",
+                            "parameters":{
+                                "id":id
+                            }
+                        }
+                    ]
+                });
+            };
+
+            window.removeMessage = function(num) {
+                /*DEBUG - START*/
+                console.log('removeMessage');
+                /*DEBUG - END*/
+                if(userMessage.messageStore && userMessage.messageStore.length >= num+1){
+                    userMessage.removeMessage(userMessage.messageStore[num].ref);
+                }
+            }
+
+            var revealFunction = function(field){
+                console.log('This reveal function is called when field message is added.');
+            }
+
+            var messages =  {
+                "page": [
+                    {
+                        "template": "message",
+                        "type": "success",
+                        "text": "JSON - Sample success message."
+                    },
+                    // {
+                    //     "template": "message",
+                    //     "type": "warning",
+                    //     "text": "JSON - Sample warning message."
+                    // },
+                    // {
+                    //     "template": "message",
+                    //     "type": "error",
+                    //     "text": "JSON - Sample error message."
+                    // },
+                    // {
+                    //     "template": "message",
+                    //     "type": "informational",
+                    //     "text": "JSON - Sample informational message."
+                    // }
+                ],
+                "field": [
+                    {
+                        "elem": "#taxType",
+                        "parameters": {
+                            "reveal": revealFunction,
+                            "suppressPageNotifier": "false",
+                            "scroll": "true"
+                        },
+                        "messages": [
+                            {
+                                "template": "message",
+                                "type": "error",
+                                "text": "JSON - First name is required.",
+                                "parameters":{
+                                    "id": "message id for reference, otherwise one will be created."
+                                }
+                            },
+                            {
+                                "template": "message",
+                                "type": "warning",
+                                "text": "JSON - Replacement Message.",
+                                "parameters":{
+                                    "id": "replacement"
+                                }
+                            }
+                        ]
+                    },
+                    // {
+                    //     "elem": "#name_first",
+                    //     "messages": [
+                    //         {
+                    //             "template": "message",
+                    //             "type": "error",
+                    //             "text": "JSON - You have to be 18 years or older to use this application. JSON"
+                    //         },
+                    //         {
+                    //             "template": "message",
+                    //             "type": "error",
+                    //             "text": "JSON - Minimum year accepted is 1900. JSON"
+                    //         }
+                    //     ]
+                    // }
+                ]
+            }
+
+            userMessage.create(messages);
+
+        });
+    </script>
+    <style>
+    /* Demo page styles */
+
+    .cui-modal-demo {
+        color: #fff;
+        border: 1px solid #777;
+        background-color: #444;
+        padding: 5px;
+    }
+
+
+    .cui-popover-demo {
+        color: #fff;
+        border: 1px solid #777;
+        background-color: #444;
+        padding: 5px;
+    }
+
+    section > .cui-row {
+        margin-bottom: 2em;
+    }
+    </style>
+</body>
+
+</html>
