@@ -533,6 +533,8 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
                 adjustedTop = parseInt(popover.$popover.css('top')) + arrowHeight;
                 popover.$popover.css({top: adjustedTop+'px'});
 
+                popover.$arrow.addClass('up-arrow');
+
                 validPosition = true;
             }
             else if ( (currentPosition === 'above-left') || (currentPosition === 'above-center') || (currentPosition === 'above-right') ) {
@@ -544,6 +546,8 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
 
                 adjustedTop = parseInt(popover.$popover.css('top')) - arrowHeight;
                 popover.$popover.css({top: adjustedTop + 'px'});
+
+                popover.$arrow.addClass('down-arrow');
 
                 validPosition = true;
             }
@@ -559,6 +563,8 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
                 adjustedLeft = parseInt(popover.$popover.css('left')) - arrowHeight;
                 popover.$popover.css({left: adjustedLeft + 'px'});
 
+                popover.$arrow.addClass('right-arrow');
+
                 validPosition = true;
             }
             else if (currentPosition === 'inline-right') {
@@ -571,6 +577,8 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
 
                 adjustedLeft = parseInt(popover.$popover.css('left'), 10) + arrowHeight;
                 popover.$popover.css({left: adjustedLeft + 'px'});
+
+                popover.$arrow.addClass('left-arrow');
 
                 validPosition = true;
             }
