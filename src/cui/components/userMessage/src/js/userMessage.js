@@ -147,7 +147,6 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             message.remove();
 
             if($messageParent.hasClass('cui-field-message')){
-                console.log('REMOVED FIELD MESSAGE');
                 if ($messageParent.children().length === 0) {
 
                     $messageParent.addClass('cui-hidden');
@@ -172,7 +171,6 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             message.remove();
 
             if($messageParent.hasClass('cui-field-message')){
-                console.log('REMOVED FIELD MESSAGE');
                 if ($messageParent.children().length === 0) {
 
                     $messageParent.addClass('cui-hidden');
@@ -183,9 +181,7 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
         }
         else if(typeof message === 'object'){
             //TODO
-            /*DEBUG - START*/
-            console.log('Remove message by object');
-            /*DEBUG - END*/
+
         }
         _priv.updatePageNotifier();
     };
@@ -217,9 +213,9 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
     };
 
     /**
-     * Desc Sets the wrapper location for field messages.
+     * Sets the parent wrapper location for field message list.
      *
-     * @param   {String}        fieldMessageLocation  String selector to set as the field message location
+     * @param   {String}        fieldMessageLocation  String selector to set as the field message list location.
      */
     var _setFieldMessageLocation = function _setFieldMessageLocation(fieldMessageLocation){
 
@@ -398,7 +394,13 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
         }
 
         //Locate or create.
-        $fieldParent = $field.closest(_vars.fieldMessageLocation);
+        if(parameters.messageLocation){
+            $fieldParent = $field.closest(parameters.messageLocation);
+        }
+        else{
+            $fieldParent = $field.closest(_vars.fieldMessageLocation);
+        }
+
         if($fieldParent.find('.cui-messages')[0]){
             $messageLoc = $($fieldParent.find('.cui-messages')[0]);
         }
@@ -442,7 +444,8 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
                         msgObj:messages[i],
                         id:messageId,
                         type:'field',
-                        parameters:parameters
+                        parameters:parameters,
+                        element: fieldMessage.elem
                     });
                 }
             }
@@ -454,7 +457,7 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             //If there is a reveal function, call it after processing all messages for the field.
             _revealField($field, parameters.reveal);
 
-            if(parameters.suppressPageNotifier !== true){
+            if(parameters.pageNotifier !== false && parameters.pageNotifier !== "false"){
                 _priv.setPageNotifier(parameters);
             }
 
@@ -466,8 +469,6 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
 
                 _priv.scrollPage($(_vars.pageMessageLocation), parameters);
             }
-
-
         }
     };
 
@@ -565,10 +566,6 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
     };
 
     _priv.scrollPage = function _scrollPage($scrollLocation, parameters){
-        /*DEBUG - START*/
-        console.log($scrollLocation);
-        console.log(parameters);
-        /*DEBUG - END*/
         if(!$(document.body).is(':animated') && (parameters.scroll === true || parameters.scroll === undefined || parameters.scroll === "true")){
             $(document.body).animate({scrollTop: $scrollLocation.scrollTop()}, 800);
         }
