@@ -56,7 +56,7 @@ module.exports = function (grunt) {
 
             styles: {
                 files: {
-                    'dist/css/modal.css': ['src/scss/modal.scss']
+                    'dist/scss/modal.scss': ['src/scss/modal.scss']
                 },
             },
         },
@@ -149,9 +149,9 @@ module.exports = function (grunt) {
                     tunnel: 'NullTunnel',
                     environments: [{
                         browserName: 'chrome',
-                    }]
+                    }],
                 },
-            }
+            },
         },
     });
 
