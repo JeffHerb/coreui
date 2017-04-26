@@ -497,6 +497,8 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
         var currentPosition = '';
         var validPosition = false;
 
+        var arrowMargin = 15;
+
         if (positionData) {
             currentPosition = positionData.currentPosition;
         }
@@ -514,8 +516,21 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
             var buttonCenterY = buttonOffset.top + buttonHeight / 2;
 
             var popoverLeft = parseInt(popover.$popover.css('left'));
+            var popoverWidth = parseInt(popover.$popover.outerWidth());
 
             var arrowLeft = buttonCenterX - popoverLeft;
+
+            //Determine the maximum left position of the arrow
+            var maxArrowLeft = popoverWidth - arrowMargin;
+
+            if ((arrowLeft) > maxArrowLeft){
+                arrowLeft = (maxArrowLeft > 0) ? maxArrowLeft : 0;
+            }
+
+            // Determine the minimum left position of the arrow.
+            if (arrowLeft  < arrowMargin){
+                arrowLeft = arrowMargin;
+            }
 
             popover.$arrow = $('<div/>', {
                                 'class': CLASSES.arrow,

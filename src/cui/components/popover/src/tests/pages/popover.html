@@ -169,6 +169,36 @@
                 </div>
             </section>
 
+            <!-- Large Below Left -->
+            <section>
+                <div class="cui-row">
+                    <div class="cui-col-small-12" style="text-align:center;">
+                        <div class="cui-field-header">Position:</div>
+                        <div class="cui-field-body"><button type="button" class="cui-button cui-center" style="white-space:normal" id="E_POPOVER_LG_L_1" tabindex="1">Large Button - Below Left<br/>Gravida rutrum feugiat aliquid, bibendum, vero saepe lacus, dicta sed, nisi purus? Posuere molestiae nonummy nisl exercitation.</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Large Below Center -->
+            <section>
+                <div class="cui-row">
+                    <div class="cui-col-small-12" style="text-align:center;">
+                        <div class="cui-field-header">Position:</div>
+                        <div class="cui-field-body"><button type="button" class="cui-button cui-center" style="white-space:normal" id="E_POPOVER_LG_C_1" tabindex="1">Large Button - Below Center<br/>Gravida rutrum feugiat aliquid, bibendum, vero saepe lacus, dicta sed, nisi purus? Posuere molestiae nonummy nisl exercitation.</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Large Below Right -->
+            <section>
+                <div class="cui-row">
+                    <div class="cui-col-small-12" style="text-align:center;">
+                        <div class="cui-field-header">Position:</div>
+                        <div class="cui-field-body"><button type="button" class="cui-button cui-center" style="white-space:normal" id="E_POPOVER_LG_R_1" tabindex="1">Large Button - Below Right<br/>Gravida rutrum feugiat aliquid, bibendum, vero saepe lacus, dicta sed, nisi purus? Posuere molestiae nonummy nisl exercitation.</button></div>
+                    </div>
+                </div>
+            </section>
+
         </form>
     </main>
     <div id="scrollTo"></div>
@@ -311,6 +341,51 @@
             $('#E_POPOVER_IR_1').popover(options_IR);
             $('#E_POPOVER_IR_2').popover(options_IR);
             $('#E_POPOVER_IR_3').popover(options_IR);
+            // =================================================================
+
+            // =================================================================
+            // Position Group - Large Left
+            // =================================================================
+            var options_LG_L = {
+                html: 'Small',
+                location: 'below-left',
+                display: {
+                    className: 'cui-popover-demo',
+                },
+                isModal: true,
+            };
+
+            $('#E_POPOVER_LG_L_1').popover(options_LG_L);
+            // =================================================================
+
+            // =================================================================
+            // Position Group - Large Center
+            // =================================================================
+            var options_LG_C = {
+                html: 'Small',
+                location: 'below-center',
+                display: {
+                    className: 'cui-popover-demo',
+                },
+                isModal: true,
+            };
+
+            $('#E_POPOVER_LG_C_1').popover(options_LG_C);
+            // =================================================================
+
+            // =================================================================
+            // Position Group - Large Right
+            // =================================================================
+            var options_LG_R = {
+                html: 'Small',
+                location: 'below-right',
+                display: {
+                    className: 'cui-popover-demo',
+                },
+                isModal: true,
+            };
+
+            $('#E_POPOVER_LG_R_1').popover(options_LG_R);
             // =================================================================
 
         });
