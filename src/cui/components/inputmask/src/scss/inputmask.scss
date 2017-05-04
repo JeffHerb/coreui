@@ -1,0 +1,12 @@
+// Core settings
+@import "../../../../../cui/scss/_settings";
+@import "../../../../../cui/scss/_utilities/_mixins";
+// Implementer settings
+@import "../../_settings";
+// Project settings
+@import "../../../../scss/_settings";
+// Component settings
+@import "_utilities/_variables";
+
+
+// Component styles:

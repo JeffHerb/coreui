@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title>Input Mask Test - Core UI</title>
+    <link href="/dist/css/main.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body>
+    <!-- Skip navigation for accessibility purposes -->
+    <div class="cui-hide-from-screen">
+        <a href="#nav">Go to navigation</a>
+        <a href="#main">Go to content</a>
+    </div>
+    <header class="cui-row">
+        <div class="cui-col-small-12">
+            <h1>Core UI</h1>
+        </div>
+        <div class="cui-col-small-12">
+            <h2>Input Mask Tests</h2>
+        </div>
+    </header>
+    <main role="main" id="main">
+        <form name="form_content" id="form_content" action="www.ny.gov" method="post">
+             <section>
+                <header>
+                    <h3>Inline Input Mask Tests</h3>
+                </header>
+
+                <div class="cui-row cui-inputmask">
+                    <div class="cui-col">
+                        <div class="cui-field">
+                            <div class="cui-field-main">
+                                <div class="cui-label">
+                                    <label for="password" class="cui-desc">Password:</label>
+                                </div>
+                                <div class="cui-data">
+                                    <input type="password" class="cui-value" id="password" size="20" maxlength="100" value="JohnSmith" tabindex="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </main>
+    <script id="require" src="/dist/js/main.js"></script>
+    <script>
+    var mydata = {};
+        require(['jquery', 'cui', 'inputmask', 'domReady!'], function($, cui, inputmask) {
+            $('.cui-inputmask [type="password"]').inputmask();
+        });
+    </script>
+</body>
+</html>
