@@ -17,7 +17,8 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
     // Private variables namespace
     var _vars = {
         pageMessageLocation: undefined,
-        fieldMessageLocation: '.cui-field'
+        fieldMessageLocation: '.cui-field',
+        scrollOffset: 10
     };
     // $('#body-wrapper').find('ul.cui-messages.emp-messages').eq(0);
 
@@ -27,11 +28,13 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             locations: "ul.cui-messages"
         },
         pageParams:{
-            scroll:true
+            scroll: true,
+            scrollElem: undefined
         },
         fieldParams:{
             pageNotifier: true, //Display Field Error page notifier with this message
-            scroll: true // Scroll to top of page when message is displayed
+            scroll: true, // Scroll to top of page when message is displayed
+            scrollElem: undefined,
         }
     };
 
@@ -55,6 +58,9 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
      * Initializes userMessage component. Adds existing messages to messageStore
      */
     var _init = function _init(){
+        //Set component variables
+        _priv.$pageBody = $("html,body");
+
         //Scan all message locations and add each message to the data store.
         var messages = $('.cui-messages').find('li');
 
@@ -355,7 +361,7 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             parameters:parameters
         });
 
-        _priv.scrollPage($messageLocation, parameters);
+        _priv.scrollPage(parameters);
 
     };
 
@@ -467,7 +473,7 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
                     _priv.buildPageMessageLocation();
                 }
 
-                _priv.scrollPage($(_vars.pageMessageLocation), parameters);
+                _priv.scrollPage(parameters);
             }
         }
     };
@@ -489,8 +495,6 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
 
                     $currentMessage.html(message.text);
                     $currentMessage.attr('class', newMessageClass);
-
-                    _priv.scrollPage($currentMessage, message.parameters);
 
                     return true;
                 }
@@ -531,8 +535,6 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
                 $messageLocation.removeClass('cui-hidden');
             }
         }
-
-        // _priv.scrollPage($messageLocation, parameters);
     };
 
     //Determines if page notifier should still be displayed, if not removes page notifier
@@ -565,9 +567,26 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
         }
     };
 
-    _priv.scrollPage = function _scrollPage($scrollLocation, parameters){
-        if(!$(document.body).is(':animated') && (parameters.scroll === true || parameters.scroll === undefined || parameters.scroll === "true")){
-            $(document.body).animate({scrollTop: $scrollLocation.scrollTop()}, 800);
+    _priv.scrollPage = function _scrollPage(parameters){
+        if(_priv.$pageBody && !_priv.$pageBody.is(':animated') && (parameters.scroll === true || parameters.scroll === undefined || parameters.scroll === "true")){
+            var scrollPosition = 0;
+            var elemPosition;
+
+
+            if(parameters.scrollElem){
+
+                if(parameters.scrollElem instanceof jQuery){
+                    elemPosition = fieldMessage.elem.offset().top;
+                }
+                else{
+                    elemPosition = $(parameters.scrollElem).offset().top;
+                }
+            }
+
+            if(elemPosition !== undefined){
+                scrollPosition = elemPosition - _vars.scrollOffset;
+            }
+            _priv.$pageBody.animate({scrollTop: scrollPosition}, 800);
         }
     };
 
