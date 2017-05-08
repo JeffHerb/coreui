@@ -28,7 +28,7 @@ var $myModal = $(window).modal(options);
 
 There are two ways to hide a modal depending on whether you stored a reference to it.
 
-To store a reference to the modal retreive the data from the button
+To store a reference to the modal retrieve the data from the button
 `var myModal = $('#button').data('modal');`
 
 With the stored reference, call `myModal.hideModal()`.

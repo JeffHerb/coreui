@@ -86,10 +86,10 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             }
         }
 
-        // Retreive default page message location if it exists
+        // Retrieve default page message location if it exists
         var pageMessageLocation = $('#body-wrapper > .cui-messages');
 
-        //Set page message location if it already exists on the page.
+        // Set page message location if it already exists on the page.
         if(pageMessageLocation.length > 0){
             _vars.pageMessageLocation = pageMessageLocation[0];
         }
