@@ -1,4 +1,4 @@
-define(['jquery', 'cui'], function ($, cui) {
+define(['jquery'], function ($) {
     /////////////
     // Globals //
     /////////////
@@ -7,7 +7,7 @@ define(['jquery', 'cui'], function ($, cui) {
     const VERSION = '1.0.0';
     const ATTR_NAMES = {
         origType: 'data-' + NAMESPACE + '-type',
-        toggleIdSuffix: '_toggle'
+        toggleIdSuffix: '_toggle',
     };
 
 
@@ -15,22 +15,14 @@ define(['jquery', 'cui'], function ($, cui) {
     // Private //
     /////////////
 
-    const _priv = {}; // Namespace for private methods
-
     // Internal flags
-    const isTouch = false;
+    // const isTouch = false;
     const store = {}; // List of tracked configs
 
     const CLASSES = {
-        inputParent: 'cui-mask-toggle', // e.g. `<div class="cui-field">` which contains the input to be masked
-        input: NAMESPACE + '-input',
-        toggleWrapper: NAMESPACE + '-toggle-wrapper'
-    };
-
-    const SELECTORS = {
-        inputsToMask: '.' + CLASSES.inputParent + ' .dataPn input,' + // Standard input field in a group
-                      'td.' + CLASSES.inputParent + ' > input,'     + // In a table
-                      '.' + CLASSES.inputParent + '.row-r input'      // In a form table
+        inputParent: 'cui-inputmask', // e.g. `<div class="cui-field">` which contains the input to be masked
+        input: 'cui-' + NAMESPACE + '-input',
+        toggleWrapper: 'cui-' + NAMESPACE + '-toggle-wrapper',
     };
 
 
@@ -73,7 +65,6 @@ define(['jquery', 'cui'], function ($, cui) {
         config.wrapper = config.input.parentNode.insertBefore(config.wrapper, config.input.nextSibling);
 
         // Updated the store
-        // console.warn('Setting store for #' + config.input.id + ' to ', config);
         store[config.input.id] = config;
 
         return config;
@@ -103,13 +94,11 @@ define(['jquery', 'cui'], function ($, cui) {
         // Change input type to make value unreadable
         config.input.type = 'password';
         config.cbox.checked = true;
-        // console.log('[enableMask]\nchecked=' + config.cbox.checked + '\ntype=' + config.input.type + '\n', JSON.parse(JSON.stringify(config)));
 
         // Update button
         setLabelText(config);
 
         // Updated the store
-        // console.warn('[enableMask] Setting store for #' + config.input.id + ' to ', config);
         store[config.input.id] = config;
 
         return config;
@@ -131,14 +120,12 @@ define(['jquery', 'cui'], function ($, cui) {
             config.input.type = config.type;
             config.cbox.checked = false;
         // }
-        // console.log('[disableMask]\nchecked=' + config.cbox.checked + '\ntype=' + config.input.type + '\n', JSON.parse(JSON.stringify(config)));
 
 
         // Update button
         setLabelText(config);
 
         // Updated the store
-        // console.warn('[disableMask] Setting store for #' + config.input.id + ' to ', config);
         store[config.input.id] = config;
 
         return config;
@@ -152,7 +139,6 @@ define(['jquery', 'cui'], function ($, cui) {
      * @return  {Number}          1 for masking, 2 for unmasking
      */
     const toggleMask = function toggleMask (config) {
-        // console.log('[toggleMask]\nchecked=' + config.cbox.checked + '\n', JSON.parse(JSON.stringify(config)));
         let returnCode = 2;
 
         // Change from visible -> masked
@@ -176,11 +162,12 @@ define(['jquery', 'cui'], function ($, cui) {
      * @param  {Object}  config  Config object
      */
     const setFocus = function setFocus (config) {
-        try { // This sometimes fails on various browsers for various difficult-to-determine reasons as of 3/24/2015 when this was an iflow component (IE7+ support). Not sure if the try/catch is necessary on modern browsers. (CP 5/8/17)
+        try {
+            // This sometimes fails on various browsers for various difficult-to-determine reasons as of 3/24/2015 when this was an iflow component (IE7+ support). Not sure if the try/catch is necessary on modern browsers. (CP 5/8/17)
             config.input.focus();
         }
         catch (e) {
-            console.error('[Inputmask => setFocus] Try catch was necessary! ', e);
+            journal.log({type: 'error', owner: 'UI', module: 'Inputmask', submodule: 'setFocus'}, 'Try/catch was necessary. Exception: ', e);
         }
     };
 
@@ -225,15 +212,12 @@ define(['jquery', 'cui'], function ($, cui) {
     // Events //
     ////////////
 
-    const _events = {};
-
     /**
      * Handles interaction with the toggler
      *
      * @param   {Event}  evt   Click or change event
      */
     const onTogglerChange = function onTogglerChange (config) {
-        // console.log('[onTogglerChange]\n', JSON.parse(JSON.stringify(config)));
         toggleMask(config);
     };
 
@@ -251,8 +235,6 @@ define(['jquery', 'cui'], function ($, cui) {
         if (elem instanceof Node) {
             // Store the element upon which the component was called
             this.elem = elem;
-            // Create a jQuery version of the element
-            // this.$self = $(elem);
 
             this.$button = $(elem);
 
@@ -285,7 +267,7 @@ define(['jquery', 'cui'], function ($, cui) {
         wrapper: null,
         labelText: {
             show: 'Show',
-            hide: 'Hide'
+            hide: 'Hide',
         },
     };
 
@@ -307,13 +289,7 @@ define(['jquery', 'cui'], function ($, cui) {
 
         // Check for attribute on the parent container since it can't always be put on the input field in a JSP when using a custom tag
         if (!origType) {
-            const inputParent = $(input).closest('.' + CLASSES.inputParent).get(0);
-
-            origType = inputParent.getAttribute(ATTR_NAMES.origType);
-
-            if (!origType) {
-                origType = 'text';
-            }
+            origType = 'text';
         }
 
         // Setup input
@@ -351,7 +327,6 @@ define(['jquery', 'cui'], function ($, cui) {
         }
 
         // Store the config
-        // console.warn('Setting store for #' + inputmask.config.input.id + ' to ', inputmask.config);
         store[inputmask.config.input.id] = inputmask.config;
 
         return inputmask;
@@ -360,7 +335,6 @@ define(['jquery', 'cui'], function ($, cui) {
     // Public function to hide the value
     Inputmask.prototype.hide = function _hideInputmask () {
         const config = store[this.config.input.id];
-        // console.log('[prototype.hide]\nchecked=' + config.cbox.checked + '\ntype=' + config.input.type + '\n', JSON.parse(JSON.stringify(config)));
 
         return enableMask(config);
     };
@@ -368,7 +342,6 @@ define(['jquery', 'cui'], function ($, cui) {
     // Public function to show the value
     Inputmask.prototype.show = function _showInputmask () {
         const config = store[this.config.input.id];
-        // console.log('[prototype.show]\nchecked=' + config.cbox.checked + '\ntype=' + config.input.type + '\n', JSON.parse(JSON.stringify(config)));
 
         return disableMask(config);
     };
@@ -376,21 +349,18 @@ define(['jquery', 'cui'], function ($, cui) {
     // Public function to toggle the display of the value
     Inputmask.prototype.toggle = function _toggleInputmask () {
         const config = store[this.config.input.id];
-        // console.log('[prototype.toggle]\nchecked=' + config.cbox.checked + '\n', JSON.parse(JSON.stringify(config)));
-        // const nextState = !$(config.cbox).is(':checked');
-        // $(config.cbox).attr('checked', nextState).trigger('change');
-        // For some reason, `config.cbox.checked` is always `true`, unlike the `hide()` and `show()` prototype methods which always get the correct value... (CP 5/8/17)
+
+        // We can't just call `toggleMask()` because for some reason, `config.cbox.checked` is always `true`, unlike the `hide()` and `show()` prototype methods which always get the correct value... (CP 5/8/17)
         $(config.cbox).trigger('click');
-        // return toggleMask(config);
     };
 
     // Set the version number
     Inputmask.version = VERSION;
 
     // Define jQuery plugin with a source element
-    $.fn.inputmask = function (options, elem) {
+    $.fn.inputmask = function (options /*, elem*/) {
         return this.each(function () {
-            if ( ! $.data(this, NAMESPACE) ) {
+            if (!$.data(this, NAMESPACE)) {
                 $.data(this, NAMESPACE, new Inputmask(this, options).init());
             }
         });
