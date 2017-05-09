@@ -9,21 +9,14 @@ define(['jquery'], function ($) {
         origType: 'data-' + NAMESPACE + '-type',
         toggleIdSuffix: '_toggle',
     };
-
-
-    /////////////
-    // Private //
-    /////////////
-
-    // Internal flags
-    // const isTouch = false;
-    const store = {}; // List of tracked configs
-
     const CLASSES = {
         inputParent: 'cui-inputmask', // e.g. `<div class="cui-field">` which contains the input to be masked
         input: 'cui-' + NAMESPACE + '-input',
         toggleWrapper: 'cui-' + NAMESPACE + '-toggle-wrapper',
     };
+
+    const store = {}; // List of tracked configs
+    // const isTouch = false;
 
 
     /////////////////////
