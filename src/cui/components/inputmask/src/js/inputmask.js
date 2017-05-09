@@ -19,10 +19,10 @@ define(['jquery', 'cui'], function ($, cui) {
 
     // Internal flags
     const isTouch = false;
-    const inputs = {}; // List of tracked inputs
+    const store = {}; // List of tracked configs
 
     const CLASSES = {
-        inputParent: 'cui-' + NAMESPACE, // e.g. `<div class="cui-field">` which contains the input to be masked
+        inputParent: 'cui-mask-toggle', // e.g. `<div class="cui-field">` which contains the input to be masked
         input: NAMESPACE + '-input',
         toggleWrapper: NAMESPACE + '-toggle-wrapper'
     };
@@ -33,53 +33,6 @@ define(['jquery', 'cui'], function ($, cui) {
                       '.' + CLASSES.inputParent + '.row-r input'      // In a form table
     };
 
-    const setup = function setup () {
-        // Make sure the browser is capable of changing an input's type and that it can query for the more advanced selector needed to find matching input fields
-        if (!canSetInputAttribute()) {
-            return false;
-        }
-
-        // isTouch = (du.browser.isSmallScreen && Modernizr.touch);
-    };
-
-    const teardown = function teardown (items) {
-        let configs = {};
-
-        // Check for specific items to tear down
-        if (items && du.typeOf(items) === 'array') {
-            // console.log('tearing down specific masked inputs');
-            // Get the settings object for each one
-            items.forEach(function (input) {
-                if (input.id && inputs[input.id] && inputs.hasOwnProperty(input.id)) {
-                    configs[input.id] = inputs[input.id];
-                }
-                else {
-                    // console.error('cannot tear down ', input);
-                }
-            });
-        }
-        // Tear down all known inputs
-        else {
-            // console.log('tearing down all masked inputs');
-            configs = inputs;
-        }
-
-        // Tear down each element
-        for (let config in configs) {
-            if (configs.hasOwnProperty(config)) {
-                config = configs[config];
-                // console.warn('tearing down ', config);
-
-                // Remove DOM elements
-                config.wrapper.removeChild(config.cbox);
-                config.wrapper.removeChild(config.label);
-                config.wrapper.parentNode.removeChild(config.wrapper);
-
-                // Remove stored settings
-                inputs[config.input.id] = null;
-            }
-        }
-    };
 
     /////////////////////
     // Private methods //
@@ -88,131 +41,146 @@ define(['jquery', 'cui'], function ($, cui) {
     /**
      * Creates a toggler UI
      *
-     * @param   {Object}  settings  Settings object
+     * @param   {Object}  config  Config object
      *
-     * @return  {Object}            Updated Setting with the new UI elements defined
+     * @return  {Object}          Updated Setting with the new UI elements defined
      */
-    const createToggle = function createToggle (settings) {
-        settings.wrapper = document.createElement('div');
+    const createToggle = function createToggle (config) {
+        config.wrapper = document.createElement('div');
 
         // Toggle controls wrapper
-        settings.wrapper.className = CLASSES.toggleWrapper;
+        config.wrapper.className = CLASSES.toggleWrapper;
 
         // Setup checkbox
-        settings.cbox = document.createElement('input');
-        settings.cbox.type = 'checkbox';
-        settings.cbox.id = settings.input.id + ATTR_NAMES.toggleIdSuffix;
-        settings.cbox.checked = true;
-        settings.cbox.setAttribute('tabindex', '1');
-        settings.cbox.addEventListener('change', _events.onTogglerChange, false);
+        config.cbox = document.createElement('input');
+        config.cbox.type = 'checkbox';
+        config.cbox.id = config.input.id + ATTR_NAMES.toggleIdSuffix;
+        config.cbox.checked = true;
+        config.cbox.setAttribute('tabindex', '1');
+        config.cbox.addEventListener('change', (/*evt*/) => onTogglerChange(config), false);
 
         // Label
-        settings.label = document.createElement('label');
-        settings.label.innerHTML = 'Hide';
-        settings.label.htmlFor = settings.cbox.id;
-        settings.label.setAttribute('role', 'button');
+        config.label = document.createElement('label');
+        config.label.innerHTML = 'Hide';
+        config.label.htmlFor = config.cbox.id;
+        config.label.setAttribute('role', 'button');
 
         // Add label and check box to the wrapper
-        settings.wrapper.appendChild(settings.cbox);
-        settings.wrapper.appendChild(settings.label);
+        config.wrapper.appendChild(config.cbox);
+        config.wrapper.appendChild(config.label);
 
         // Add the wrapper right after the input
-        settings.wrapper = settings.input.parentNode.insertBefore(settings.wrapper, settings.input.nextSibling);
+        config.wrapper = config.input.parentNode.insertBefore(config.wrapper, config.input.nextSibling);
 
-        // Update stored settings
-        inputs[settings.input.id] = settings;
+        // Updated the store
+        // console.warn('Setting store for #' + config.input.id + ' to ', config);
+        store[config.input.id] = config;
 
-        return settings;
+        return config;
     };
 
     /**
      * Updates the toggler label text to reflect the current state
      *
-     * @param  {String}  settings  The new label text
+     * @param  {String}  config  The new label text
      */
-    const setLabelText = function setLabelText (settings) {
-        var state = settings.cbox.checked ? 'show' : 'hide';
+    const setLabelText = function setLabelText (config) {
+        var state = config.cbox.checked ? 'show' : 'hide';
 
-        settings.label.innerHTML = settings.labelText[state];
+        config.label.innerHTML = config.labelText[state];
 
-        return settings.labelText[state];
+        return config.labelText[state];
     };
 
     /**
      * Masks the input's value like a password
      *
-     * @param   {Object}  settings  Settings object
+     * @param   {Object}  config  Config object
      *
-     * @return  {Boolean}           Success/failure
+     * @return  {Boolean}         Success/failure
      */
-    const enableMask = function enableMask (settings) {
+    const enableMask = function enableMask (config) {
         // Change input type to make value unreadable
-        settings.input.type = 'password';
+        config.input.type = 'password';
+        config.cbox.checked = true;
+        // console.log('[enableMask]\nchecked=' + config.cbox.checked + '\ntype=' + config.input.type + '\n', JSON.parse(JSON.stringify(config)));
 
         // Update button
-        setLabelText(settings);
+        setLabelText(config);
 
-        return true;
+        // Updated the store
+        // console.warn('[enableMask] Setting store for #' + config.input.id + ' to ', config);
+        store[config.input.id] = config;
+
+        return config;
     };
 
     /**
      * Makes the input's value readable
      *
-     * @param   {Object}  settings  Settings object
+     * @param   {Object}  config  Config object
      *
-     * @return  {Boolean}           Success/failure
+     * @return  {Boolean}         Success/failure
      */
-    const disableMask = function disableMask (settings) {
+    const disableMask = function disableMask (config) {
         // Revert input type so the value is readable
         // if (isTouch) {
-        //     settings.input.type = settings.touchType;
+        //     config.input.type = config.touchType;
         // }
         // else {
-            settings.input.type = settings.type;
+            config.input.type = config.type;
+            config.cbox.checked = false;
         // }
+        // console.log('[disableMask]\nchecked=' + config.cbox.checked + '\ntype=' + config.input.type + '\n', JSON.parse(JSON.stringify(config)));
+
 
         // Update button
-        setLabelText(settings);
+        setLabelText(config);
 
-        return true;
+        // Updated the store
+        // console.warn('[disableMask] Setting store for #' + config.input.id + ' to ', config);
+        store[config.input.id] = config;
+
+        return config;
     };
 
     /**
      * Toggle a field's masking
-     * @param   {Object}  settings  Field settings
      *
-     * @return  {Number}            1 for masking, 2 for unmasking
+     * @param   {Object}  config  Field config
+     *
+     * @return  {Number}          1 for masking, 2 for unmasking
      */
-    const toggleMask = function toggleMask (settings) {
-        // Change from shown -> masked
-        if (settings.cbox.checked) {
-            enableMask(settings);
-            setFocus(settings);
+    const toggleMask = function toggleMask (config) {
+        // console.log('[toggleMask]\nchecked=' + config.cbox.checked + '\n', JSON.parse(JSON.stringify(config)));
+        let returnCode = 2;
 
-            return 1;
+        // Change from visible -> masked
+        if (config.cbox.checked) {
+            config = enableMask(config);
+            returnCode = 1;
         }
-        // Change from masked -> shown
+        // Change from masked -> visible
         else {
-            disableMask(settings);
-            setFocus(settings);
-
-            return 2;
+            config = disableMask(config);
         }
 
-        return -1;
+        setFocus(config);
+
+        return returnCode;
     };
 
     /**
-     * Set focus to an input field
+     * Set focus to the input field
      *
-     * @param  {Object}  settings  Settings object
+     * @param  {Object}  config  Config object
      */
-    const setFocus = function priv_setFocus (settings) {
-        try { // This sometimes fails on various browsers for various difficult-to-determine reasons (3/24/2015 CP)
-            settings.input.focus();
+    const setFocus = function setFocus (config) {
+        try { // This sometimes fails on various browsers for various difficult-to-determine reasons as of 3/24/2015 when this was an iflow component (IE7+ support). Not sure if the try/catch is necessary on modern browsers. (CP 5/8/17)
+            config.input.focus();
         }
         catch (e) {
-            // console.error(e);
+            console.error('[Inputmask => setFocus] Try catch was necessary! ', e);
         }
     };
 
@@ -264,11 +232,9 @@ define(['jquery', 'cui'], function ($, cui) {
      *
      * @param   {Event}  evt   Click or change event
      */
-    _events.onTogglerChange = function _onTogglerChange (evt) {
-        var input = evt.target;
-        var settings = inputs[input.id.replace(ATTR_NAMES.toggleIdSuffix, '')];
-
-        toggleMask(settings);
+    const onTogglerChange = function onTogglerChange (config) {
+        // console.log('[onTogglerChange]\n', JSON.parse(JSON.stringify(config)));
+        toggleMask(config);
     };
 
 
@@ -276,7 +242,12 @@ define(['jquery', 'cui'], function ($, cui) {
     // Public //
     ////////////
 
-    var Inputmask = function (elem, options) {
+    const Inputmask = function (elem, options) {
+        // Make sure the browser is capable of changing an input's type and that it can query for the more advanced selector needed to find matching input fields
+        if (!canSetInputAttribute()) {
+            return false;
+        }
+
         if (elem instanceof Node) {
             // Store the element upon which the component was called
             this.elem = elem;
@@ -334,12 +305,6 @@ define(['jquery', 'cui'], function ($, cui) {
 
         let origType = input.getAttribute(ATTR_NAMES.origType) || $(input).closest('.' + CLASSES.inputParent).get(0).getAttribute(ATTR_NAMES.origType) || this.default.type;
 
-        // Avoid setting up the same input twice if this function is called multiple times (e.g. when rendering a form table)
-        if (inputs[input.id] || inputs[input.id.replace(/_toggle$/, '')]) {
-            console.warn('[Inputmask => _init] already did ' + input.id, inputs[input.id]);
-            return false;
-        }
-
         // Check for attribute on the parent container since it can't always be put on the input field in a JSP when using a custom tag
         if (!origType) {
             const inputParent = $(input).closest('.' + CLASSES.inputParent).get(0);
@@ -377,31 +342,47 @@ define(['jquery', 'cui'], function ($, cui) {
         // Create toggle controls
         inputmask.config = createToggle(inputmask.config);
 
-        // Apply initial settings
+        // Apply initial config
         if (inputmask.config.cbox.checked) {
-            enableMask(inputmask.config, true);
+            inputmask.config = enableMask(inputmask.config, true);
         }
         else {
-            disableMask(inputmask.config, true);
+            inputmask.config = disableMask(inputmask.config, true);
         }
 
-        // Store the settings
-        inputs[input.id] = inputmask.config;
+        // Store the config
+        // console.warn('Setting store for #' + inputmask.config.input.id + ' to ', inputmask.config);
+        store[inputmask.config.input.id] = inputmask.config;
 
         return inputmask;
     };
 
-    // // Public function to hide a mask
-    // Inputmask.prototype.hide = function _hideInputmask () {
-    //     hideInputmask(this);
-    //     // Set focus back to page element where mask was triggered
-    //     setFocusOnClose(this);
-    // };
+    // Public function to hide the value
+    Inputmask.prototype.hide = function _hideInputmask () {
+        const config = store[this.config.input.id];
+        // console.log('[prototype.hide]\nchecked=' + config.cbox.checked + '\ntype=' + config.input.type + '\n', JSON.parse(JSON.stringify(config)));
 
-    // // Public function to show a mask
-    // Inputmask.prototype.show = function _show () {
-    //     showInputmask(this);
-    // };
+        return enableMask(config);
+    };
+
+    // Public function to show the value
+    Inputmask.prototype.show = function _showInputmask () {
+        const config = store[this.config.input.id];
+        // console.log('[prototype.show]\nchecked=' + config.cbox.checked + '\ntype=' + config.input.type + '\n', JSON.parse(JSON.stringify(config)));
+
+        return disableMask(config);
+    };
+
+    // Public function to toggle the display of the value
+    Inputmask.prototype.toggle = function _toggleInputmask () {
+        const config = store[this.config.input.id];
+        // console.log('[prototype.toggle]\nchecked=' + config.cbox.checked + '\n', JSON.parse(JSON.stringify(config)));
+        // const nextState = !$(config.cbox).is(':checked');
+        // $(config.cbox).attr('checked', nextState).trigger('change');
+        // For some reason, `config.cbox.checked` is always `true`, unlike the `hide()` and `show()` prototype methods which always get the correct value... (CP 5/8/17)
+        $(config.cbox).trigger('click');
+        // return toggleMask(config);
+    };
 
     // Set the version number
     Inputmask.version = VERSION;
@@ -410,18 +391,13 @@ define(['jquery', 'cui'], function ($, cui) {
     $.fn.inputmask = function (options, elem) {
         return this.each(function () {
             if ( ! $.data(this, NAMESPACE) ) {
-                $.data(this, NAMESPACE, new Inputmask(this,options).init());
+                $.data(this, NAMESPACE, new Inputmask(this, options).init());
             }
         });
     };
 
     // Create from scratch.
     $.inputmask = function (options) {
-        return new Modal(options).init();
-    };
-
-    return {
-        setup: setup,
-        teardown: teardown
+        return new Inputmask(options).init();
     };
 });

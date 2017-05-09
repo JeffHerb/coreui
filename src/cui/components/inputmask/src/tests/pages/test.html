@@ -49,6 +49,7 @@
     var mydata = {};
         require(['jquery', 'cui', 'inputmask', 'domReady!'], function($, cui, inputmask) {
             $('.cui-inputmask [type="password"]').inputmask();
+            window.testInputMask = $('.cui-inputmask [type="password"]').data('inputmask');
         });
     </script>
 </body>
