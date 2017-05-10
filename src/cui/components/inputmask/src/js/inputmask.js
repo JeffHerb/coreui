@@ -30,7 +30,7 @@ define(['jquery'], function ($) {
      *
      * @return  {Object}          Updated Setting with the new UI elements defined
      */
-    const createToggle = function createToggle (config) {
+    const createToggle = (config) => {
         config.wrapper = document.createElement('div');
 
         // Toggle controls wrapper
@@ -43,6 +43,7 @@ define(['jquery'], function ($) {
         config.cbox.checked = true;
         config.cbox.setAttribute('tabindex', '1');
         config.cbox.addEventListener('change', (/*evt*/) => onTogglerChange(config), false);
+        config.cbox.addEventListener('keydown', (evt) => onTogglerKeydown(evt, config), false);
 
         // Label
         config.label = document.createElement('label');
@@ -68,7 +69,7 @@ define(['jquery'], function ($) {
      *
      * @param  {String}  config  The new label text
      */
-    const setLabelText = function setLabelText (config) {
+    const setLabelText = (config) => {
         var state = config.cbox.checked ? 'show' : 'hide';
 
         config.label.innerHTML = config.labelText[state];
@@ -83,7 +84,7 @@ define(['jquery'], function ($) {
      *
      * @return  {Boolean}         Success/failure
      */
-    const enableMask = function enableMask (config) {
+    const enableMask = (config) => {
         // Change input type to make value unreadable
         config.input.type = 'password';
         config.cbox.checked = true;
@@ -104,7 +105,7 @@ define(['jquery'], function ($) {
      *
      * @return  {Boolean}         Success/failure
      */
-    const disableMask = function disableMask (config) {
+    const disableMask = (config) => {
         // Revert input type so the value is readable
         // if (isTouch) {
         //     config.input.type = config.touchType;
@@ -131,7 +132,7 @@ define(['jquery'], function ($) {
      *
      * @return  {Number}          1 for masking, 2 for unmasking
      */
-    const toggleMask = function toggleMask (config) {
+    const toggleMask = (config) => {
         let returnCode = 2;
 
         // Change from visible -> masked
@@ -154,7 +155,7 @@ define(['jquery'], function ($) {
      *
      * @param  {Object}  config  Config object
      */
-    const setFocus = function setFocus (config) {
+    const setFocus = (config) => {
         try {
             // This sometimes fails on various browsers for various difficult-to-determine reasons as of 3/24/2015 when this was an iflow component (IE7+ support). Not sure if the try/catch is necessary on modern browsers. (CP 5/8/17)
             config.input.focus();
@@ -171,7 +172,7 @@ define(['jquery'], function ($) {
      *
      * @return  {Boolean}  Whether the browser can set an input's type
      */
-    const canSetInputAttribute = function canSetInputAttribute () {
+    const canSetInputAttribute = () => {
         let body = document.body;
         let input = document.createElement('input');
         let result = true;
@@ -210,8 +211,21 @@ define(['jquery'], function ($) {
      *
      * @param   {Event}  evt   Click or change event
      */
-    const onTogglerChange = function onTogglerChange (config) {
+    const onTogglerChange = (config) => {
         toggleMask(config);
+    };
+
+    /**
+     * Handles interaction with the toggler
+     *
+     * @param   {Event}  evt   Click or change event
+     */
+    const onTogglerKeydown = (evt, config) => {
+        // Enter key or space bar
+        if (evt.keyCode === 13 || evt.keyCode === 32) {
+            config.cbox.checked = !config.cbox.checked;
+            toggleMask(config);
+        }
     };
 
 

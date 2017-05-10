@@ -21,7 +21,7 @@
         </div>
     </header>
     <main role="main" id="main">
-        <form name="form_content" id="form_content" action="www.ny.gov" method="post">
+        <form name="form_content" id="form_content" action="https://www.ny.gov" method="post">
              <section>
                 <header>
                     <h3>Inline Input Mask Tests</h3>
@@ -36,6 +36,37 @@
                                 </div>
                                 <div class="cui-data">
                                     <input type="password" class="cui-value" id="password" size="20" maxlength="100" value="JohnSmith" tabindex="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cui-row cui-inputmask">
+                    <div class="cui-col">
+                        <div class="cui-field">
+                            <div class="cui-field-main">
+                                <div class="cui-label">
+                                    <label for="ssn" class="cui-desc">Social security number:</label>
+                                </div>
+                                <div class="cui-data">
+                                    <input type="password" class="cui-value" id="ssn" size="11" maxlength="11" value="" tabindex="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="cui-row">
+                    <div class="cui-col">
+                        <div class="cui-field">
+                            <div class="cui-field-main">
+                                <div class="cui-label">
+                                    <label for="regularField" class="cui-desc">Regular field with no masking:</label>
+                                </div>
+                                <div class="cui-data">
+                                    <input type="text" class="cui-value" id="regularField" size="11" maxlength="11" value="" tabindex="1">
                                 </div>
                             </div>
                         </div>
