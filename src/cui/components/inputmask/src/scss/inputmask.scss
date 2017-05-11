@@ -1,0 +1,156 @@
+// Core settings
+@import "../../../../../cui/scss/_settings";
+@import "../../../../../cui/scss/_utilities/_mixins";
+// Implementer settings
+@import "../../_settings";
+// Project settings
+@import "../../../../scss/_settings";
+// Component settings
+@import "_utilities/_variables";
+
+
+// Component styles:
+.cui-inputmask {
+    .cui-inputmask-input {
+        display: inline-block;
+        padding-right: $cui-inputmask-input-padding-right !important; // Room for the button to overlay the input
+
+        // Set a width so the field doesn't jump back and forth between two browser-determined widths when switching types
+        // Remember to allow room the browser's "clear" and "reveal" buttons which appear in the field
+
+        // Default width
+        width: 180px;
+
+        // More accurate widths based on the `size` attribute:
+
+        &[size="4"] {
+            width: 112px;
+
+            &::-ms-clear {
+                margin-right: -12px;
+            }
+        }
+
+        &[size="11"] {
+            width: 172px;
+        }
+
+        &[size="13"] {
+            width: 184px;
+        }
+
+        &[size="16"] {
+            width: 164px;
+        }
+
+        &[size="20"] {
+            width: 250px;
+        }
+
+        // Hide IE10+ UI control for revealing the password since it competes with our plugin,
+        // &::-ms-clear,
+        &::-ms-reveal {
+            display: none !important;
+        }
+    }
+
+    table & {
+        // Room for the button to overlay the input, same as above
+        padding-right: $cui-inputmask-input-padding-right !important; // `important` is needed to override the padding set by `.rset.form-table td > input`
+    }
+
+    .cui-inputmask-toggle-wrapper {
+        display: inline-block;
+        width: 0; // The wrapper needs to leave zero space behind so that other elements (e.g. help icons) will stay up against the input; otherwise, using position:relative below only moves the toggle but dosesn't remove its footprint from the layout
+        vertical-align: baseline !important; // Override `div.group div`
+
+        // Push the button to the right so it overlays the input
+        position: relative;
+        right: $cui-inputmask-input-padding-right; // Not sure if the value of `right` *should* match the input padding, but it does; so feel free to change this value to something else if the styles break in the future. (CP 8/3/15)
+        z-index: 2;
+
+        input {
+            @include hide;
+
+            // Make the label look focused when the check box actually has the focus
+            &:focus + label {
+                outline: $cui-input-bg-color auto 2px;
+                outline: -webkit-focus-ring-color auto 5px; // Native Chrome look and feel
+            }
+        }
+
+        label {
+            display: block;
+            width: 3.5em; // Hard width value so it doesn't move when the text changes
+            text-align: center;
+            padding-left: 0; // Override `input[type="checkbox"] + label`
+            color: $cui-link-color;
+            font-size: 14px;
+        }
+    }
+
+    // Small and medium screens
+    @include pointbreak-max($cui-bp-medium) {
+        section {
+            .cui-inputmask-input {
+                padding-right: $cui-inputmask-input-padding-right; // Override `.responsive.bp-main input:not([type="button"]):not([type="submit"])`
+
+                // Default width
+                width: 220px;
+
+                // Specific sizes
+                &[maxlength="4"] {
+                    width: 120px;
+                }
+
+                // FYI the max width is 238px (on a 320px iPhone 5 screen) before help icons will wrap
+                // *** All sizes below here will cause icons to wrap:
+
+                &[size="20"] {
+                    width: 285px;
+                }
+            }
+
+            .cui-inputmask-toggle-wrapper {
+                right: 48px;
+
+                label {
+                    // @include button;
+                    display: block !important; // Override `.responsive.bp-medium div.group div.linePn .dataPn label`
+                    margin-right: 0 !important; // Override `.responsive.bp-main .group .dataPn input[type="checkbox"]:first-child + label`... Even though we don't need a margin for layout purposes, having a margin will cause the link to invisibly overlay a help icon that resides immediately after the input
+                }
+            }
+        }
+    }
+
+    @include pointbreak-max($cui-bp-medium) {
+        section & .cui-inputmask-toggle-wrapper {
+            top: 0; // Shift the button a little higher inside form tables
+        }
+    }
+
+    // Medium screens
+    @include pointbreak-max($cui-bp-medium) {
+        section &.cui-field { // `div` for more specificity over `&[maxlength^="1"]:not([maxlength="1"])` in the main breakpoint, above
+            .cui-inputmask-input {
+                // Expand some widths since we have more room in this breakpoint
+
+                width: 312px; // This isn't really wide enough, but that's all the screen space we have with `.labelM` and at the moment (3/2015) no other label widths are used with this pattern
+
+                &[maxlength="11"] {
+                    width: 220px;
+                }
+            }
+        }
+    }
+
+    @include pointbreak-max($cui-bp-medium) {
+        section & {
+            .cui-inputmask-toggle-wrapper {
+                label {
+                    margin-top: 0; // Override `.responsive.bp-medium div.group div.linePn .dataPn label`
+                }
+            }
+        }
+    }
+}
