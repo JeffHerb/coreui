@@ -301,7 +301,7 @@ define(['jquery'], function ($) {
 
         // Setup input
         input.setAttribute('autocomplete', 'off');
-        input.setAttribute('spellcheck', 'true');
+        input.setAttribute('spellcheck', 'false');
         input.classList.add(CLASSES.input);
 
         inputmask.config.input = input;
