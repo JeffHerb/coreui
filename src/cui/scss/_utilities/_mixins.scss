@@ -198,6 +198,17 @@
     background-color: $cui-button-bg-color;
     text-shadow: $cui-button-text-shadow;
     white-space: $cui-button-text-wrapping;
+
+    &:focus,
+    &:hover {
+        @include button-hover;
+    }
+}
+
+@mixin button-hover {
+    background-color: $cui-button-bg-color-hover;
+    // border-color: $cui-button-border-color;
+    text-shadow: none;
 }
 
 @mixin button-primary {
@@ -227,6 +238,22 @@
     color: $cui-button-primary-color-active; // Repeated for elements that only include this mixin and not the basic primary styles
     background-color: $cui-button-primary-bg-color;
     text-shadow: $cui-button-primary-text-shadow;
+}
+
+@mixin button-selected {
+    background-color: $cui-button-bg-color-selected;
+    @include vertical-gradient-multiple($cui-link-color 0%, $cui-link-color 10%, transparent 10%, transparent 100%);
+    font-weight: 600;
+    border-color: $cui-input-border-color-selected;
+
+    &:focus,
+    &:hover {
+        @include button-selected-hover;
+    }
+}
+
+@mixin button-selected-hover {
+    background-color: $cui-button-bg-color-selected-hover;
 }
 
 @mixin button-icon($width: $cui-button-icon-width, $height: $cui-button-icon-height) {

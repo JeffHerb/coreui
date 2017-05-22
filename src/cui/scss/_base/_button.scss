@@ -17,11 +17,6 @@ button {
     line-height: $cui-line-height;
     @include button;
     padding: $cui-button-padding;
-
-    &:hover {
-        border-color: $cui-button-border-color;
-        background-color: $cui-button-bg-color;
-    }
 }
 
 input[type="button"],
@@ -43,4 +38,8 @@ input[type="submit"] {
 // * --------------------------------------------------------
 .cui-button-primary {
     @include button-primary;
+}
+
+.cui-button-selected {
+    @include button-selected;
 }
