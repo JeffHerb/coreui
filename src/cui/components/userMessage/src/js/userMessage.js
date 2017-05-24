@@ -35,6 +35,9 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             pageNotifier: true, //Display Field Error page notifier with this message
             scroll: true, // Scroll to top of page when message is displayed
             scrollElem: undefined,
+        },
+        pageNotifier:{
+            message:"There are one or more errors on this page. Please see below."
         }
     };
 
@@ -228,6 +231,24 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
         if(fieldMessageLocation){
             _vars.fieldMessageLocation = fieldMessageLocation;
             return true;
+        }
+
+        return false;
+    };
+
+    /**
+     * Sets the page notifier message. Will only update the message if no previous message has been set by the user.
+     *
+     * @param   {String}        message  Message to be displayed as the field message page notifier.
+     */
+    var _setPageNotifierMessage = function _setPageNotifierMessage(notifierMessage){
+
+        if(notifierMessage && typeof notifierMessage === "string"){
+
+            //Only update the pageNotifier if the message has not already been set.
+            if(!_vars.pageNotifierMessage){
+                _vars.pageNotifierMessage = notifierMessage;
+            }
         }
 
         return false;
@@ -519,7 +540,15 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
 
 
         var fieldPageNotifierClass = "cui-field-error-notifier";
-        var fieldPageNotifierMessage = "UI: There are one or more errors on this page. Please see below.";
+        var fieldPageNotifierMessage;
+
+        if(_vars.pageNotifierMessage && _vars.pageNotifierMessage){
+            fieldPageNotifierMessage =  _vars.pageNotifierMessage;
+        }
+        else{
+            fieldPageNotifierMessage = _defaults.pageNotifier.message;
+        }
+
 
         if($messageLocation.find('.cui-field-error-notifier').eq(0).length === 0){
             $message = $('<li/>', {
@@ -598,8 +627,12 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
         init: _init,
         create: _create,
         removeMessage: _removeMessage,
+
         setPageMessageLocation: _setPageMessageLocation,
         setFieldMessageLocation: _setFieldMessageLocation,
+
+        setPageNotifierMessage: _setPageNotifierMessage,
+
         messageStore: _priv.messageStore
     };
 });
