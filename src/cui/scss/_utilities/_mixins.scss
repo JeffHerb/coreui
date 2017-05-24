@@ -219,6 +219,7 @@
     text-shadow: $cui-button-primary-text-shadow;
     -webkit-font-smoothing: antialiased;
 
+    &:focus,
     &:hover {
         @include button-primary-hover;
     }
