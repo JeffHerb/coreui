@@ -37,7 +37,7 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             scrollElem: undefined,
         },
         pageNotifier:{
-            message:"UI: There are one or more errors on this page. Please see below."
+            message:"There are one or more errors on this page. Please see below."
         }
     };
 
