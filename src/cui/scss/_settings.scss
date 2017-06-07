@@ -116,7 +116,9 @@ $cui-field-flex-order: 99999 !default;
 $cui-field-space-between-field-elements: 0 !default;
 $cui-field-space-between-controls: (0.5 * $cui-field-space-between-field-elements) !default;
 $cui-field-use-asterisk-for-required-fields: true !default;
-
+$cui-field-ms-browser-clear-display: initial !default; //Settings for browser inserted clear field control
+$cui-field-ms-browser-clear-width: auto !default;
+$cui-field-ms-browser-clear-height: auto !default;
 
 // * @section    Buttons
 // * --------------------------------------------------------

@@ -94,6 +94,13 @@ fieldset {
     }
 }
 
+//Settings to control browser specific clear control on input elements.
+input::-ms-clear{
+    display: $cui-field-ms-browser-clear-display;
+    width: $cui-field-ms-browser-clear-display;
+    height: $cui-field-ms-browser-clear-display;
+}
+
 
 // * @section    Labels
 // * --------------------------------------------------------
@@ -600,3 +607,5 @@ input[type=number].cui-hide-spinner::-webkit-outer-spin-button {
 input[type=number].cui-hide-spinner {
     -moz-appearance: textfield;
 }
+
+
