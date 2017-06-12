@@ -97,8 +97,8 @@ fieldset {
 //Settings to control browser specific clear control on input elements.
 input::-ms-clear{
     display: $cui-field-ms-browser-clear-display;
-    width: $cui-field-ms-browser-clear-display;
-    height: $cui-field-ms-browser-clear-display;
+    width: $cui-field-ms-browser-clear-width;
+    height: $cui-field-ms-browser-clear-height;
 }
 
 
