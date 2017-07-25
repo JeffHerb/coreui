@@ -265,6 +265,20 @@ legend {
         }
     }
 
+    //Field collection.
+    .cui-field-collection{
+        .cui-field-collection-item{
+            display:inline-block;
+            input{
+                margin-right:5px;
+            }
+        }
+    }
+    .cui-sub-label{
+        margin:0 5px;
+    }
+
+
     // Other layouts can be added here by changing `order` for the applicable flexbox column(s)
 }
 
