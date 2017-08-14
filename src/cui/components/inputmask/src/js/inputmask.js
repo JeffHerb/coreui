@@ -3,14 +3,14 @@ define(['jquery'], function ($) {
     // Globals //
     /////////////
 
-    const NAMESPACE = 'inputmask';
+    const NAMESPACE = 'input-mask';
     const VERSION = '1.0.0';
     const ATTR_NAMES = {
         origType: 'data-' + NAMESPACE + '-type',
         toggleIdSuffix: '_toggle',
     };
     const CLASSES = {
-        inputParent: 'cui-inputmask', // e.g. `<div class="cui-field">` which contains the input to be masked
+        inputParent: 'cui-input-mask', // e.g. `<div class="cui-field">` which contains the input to be masked
         input: 'cui-' + NAMESPACE + '-input',
         toggleWrapper: 'cui-' + NAMESPACE + '-toggle-wrapper',
     };
@@ -249,7 +249,7 @@ define(['jquery'], function ($) {
             // to support customization of the plugin on a per-element
             // basis. For example,
             // <div class="item" data-inputmask-options="{'message':'Goodbye World!'}"></div>
-            this.metadata = this.$button.data('inputmask-options');
+            this.metadata = this.$button.data('input-mask-options');
         }
         else {
             this.metadata = {};
