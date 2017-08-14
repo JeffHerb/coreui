@@ -27,9 +27,9 @@
                     <h3>Inline Input Mask Tests</h3>
                 </header>
 
-                <div class="cui-row cui-inputmask">
+                <div class="cui-row">
                     <div class="cui-col">
-                        <div class="cui-field">
+                        <div class="cui-field cui-input-mask">
                             <div class="cui-field-main">
                                 <div class="cui-label">
                                     <label for="password" class="cui-desc">Password:</label>
@@ -42,9 +42,9 @@
                     </div>
                 </div>
 
-                <div class="cui-row cui-inputmask">
+                <div class="cui-row">
                     <div class="cui-col">
-                        <div class="cui-field">
+                        <div class="cui-field cui-input-mask">
                             <div class="cui-field-main">
                                 <div class="cui-label">
                                     <label for="ssn" class="cui-desc">Social security number:</label>
@@ -79,8 +79,8 @@
     <script>
     var mydata = {};
         require(['jquery', 'cui', 'inputmask', 'domReady!'], function($, cui, inputmask) {
-            $('.cui-inputmask [type="password"]').inputmask();
-            window.testInputMask = $('.cui-inputmask [type="password"]').data('inputmask');
+            $('.cui-input-mask [type="password"]').inputmask();
+            window.testInputMask = $('.cui-input-mask [type="password"]').data('inputmask');
         });
     </script>
 </body>

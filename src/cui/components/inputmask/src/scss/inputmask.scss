@@ -10,10 +10,10 @@
 
 
 // Component styles:
-.cui-inputmask {
-    .cui-inputmask-input {
+.cui-input-mask {
+    .cui-input-mask-input {
         display: inline-block;
-        padding-right: $cui-inputmask-input-padding-right !important; // Room for the button to overlay the input
+        padding-right: $cui-input-mask-input-padding-right !important; // Room for the button to overlay the input
 
         // Set a width so the field doesn't jump back and forth between two browser-determined widths when switching types
         // Remember to allow room the browser's "clear" and "reveal" buttons which appear in the field
@@ -56,17 +56,17 @@
 
     table & {
         // Room for the button to overlay the input, same as above
-        padding-right: $cui-inputmask-input-padding-right !important; // `important` is needed to override the padding set by `.rset.form-table td > input`
+        padding-right: $cui-input-mask-input-padding-right !important; // `important` is needed to override the padding set by `.rset.form-table td > input`
     }
 
-    .cui-inputmask-toggle-wrapper {
+    .cui-input-mask-toggle-wrapper {
         display: inline-block;
         width: 0; // The wrapper needs to leave zero space behind so that other elements (e.g. help icons) will stay up against the input; otherwise, using position:relative below only moves the toggle but dosesn't remove its footprint from the layout
         vertical-align: baseline !important; // Override `div.group div`
 
         // Push the button to the right so it overlays the input
         position: relative;
-        right: $cui-inputmask-input-padding-right; // Not sure if the value of `right` *should* match the input padding, but it does; so feel free to change this value to something else if the styles break in the future. (CP 8/3/15)
+        right: $cui-input-mask-input-padding-right; // Not sure if the value of `right` *should* match the input padding, but it does; so feel free to change this value to something else if the styles break in the future. (CP 8/3/15)
         z-index: 2;
 
         input {
@@ -92,8 +92,8 @@
     // Small and medium screens
     @include pointbreak-max($cui-bp-medium) {
         section {
-            .cui-inputmask-input {
-                padding-right: $cui-inputmask-input-padding-right; // Override `.responsive.bp-main input:not([type="button"]):not([type="submit"])`
+            .cui-input-mask-input {
+                padding-right: $cui-input-mask-input-padding-right; // Override `.responsive.bp-main input:not([type="button"]):not([type="submit"])`
 
                 // Default width
                 width: 220px;
@@ -111,7 +111,7 @@
                 }
             }
 
-            .cui-inputmask-toggle-wrapper {
+            .cui-input-mask-toggle-wrapper {
                 right: 48px;
 
                 label {
@@ -124,7 +124,7 @@
     }
 
     @include pointbreak-max($cui-bp-medium) {
-        section & .cui-inputmask-toggle-wrapper {
+        section & .cui-input-mask-toggle-wrapper {
             top: 0; // Shift the button a little higher inside form tables
         }
     }
@@ -132,7 +132,7 @@
     // Medium screens
     @include pointbreak-max($cui-bp-medium) {
         section &.cui-field { // `div` for more specificity over `&[maxlength^="1"]:not([maxlength="1"])` in the main breakpoint, above
-            .cui-inputmask-input {
+            .cui-input-mask-input {
                 // Expand some widths since we have more room in this breakpoint
 
                 width: 312px; // This isn't really wide enough, but that's all the screen space we have with `.labelM` and at the moment (3/2015) no other label widths are used with this pattern
@@ -146,7 +146,7 @@
 
     @include pointbreak-max($cui-bp-medium) {
         section & {
-            .cui-inputmask-toggle-wrapper {
+            .cui-input-mask-toggle-wrapper {
                 label {
                     margin-top: 0; // Override `.responsive.bp-medium div.group div.linePn .dataPn label`
                 }
