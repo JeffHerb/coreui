@@ -225,6 +225,7 @@ define(['jquery'], function ($) {
         if (evt.keyCode === 13 || evt.keyCode === 32) {
             config.cbox.checked = !config.cbox.checked;
             toggleMask(config);
+            evt.preventDefault();
         }
     };
 
