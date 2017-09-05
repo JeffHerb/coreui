@@ -515,10 +515,18 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
 
             for (var i = 0; i < _priv.messageStore.length; i++) {
 
-                if (_priv.messageStore[i].id === messageId) {
+                if (_priv.messageStore[i] && _priv.messageStore[i].id === messageId) {
                     var currentMessage = _priv.messageStore[i];
-                    var $currentMessage = $(currentMessage.ref);
+                    var $currentMessage = $('#'+messageId);
                     var newMessageClass = _priv.getMessageClassFromType(message.type);
+
+                    if ($currentMessage.length === 0) {
+                        //Message not found in the dom. Remove message from store and return false to recreate.
+                        if(i != -1) {
+                            _priv.messageStore.splice(i, 1);
+                        }
+                        return false;
+                    }
 
                     $currentMessage.html(message.text);
                     $currentMessage.attr('class', newMessageClass);
