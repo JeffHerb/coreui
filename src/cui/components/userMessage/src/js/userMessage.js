@@ -431,15 +431,29 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             $fieldParent = $field.closest(_vars.fieldMessageLocation);
         }
 
-        if ($fieldParent.find('.cui-messages')[0]) {
-            $messageLoc = $($fieldParent.find('.cui-messages')[0]);
-        }
-        else {
-            $messageLoc = $('<ul/>', {
-                'class': 'cui-messages cui-field-message'
-            });
+        //If there is a valid messages field parent, set the message location
+        if($fieldParent.length > 0){
 
-            $fieldParent.append($messageLoc);
+            if ($fieldParent.find('.cui-messages')[0]) {
+                $messageLoc = $($fieldParent.find('.cui-messages')[0]);
+            }
+            else {
+                $messageLoc = $('<ul/>', {
+                    'class': 'cui-messages cui-field-message'
+                });
+
+                $fieldParent.append($messageLoc);
+            }
+        }
+        //If a field parent cannot be found, set the field message location to the page message location.
+        else {
+
+            //If page message location is not set, locate it with defaults.
+            if (_vars.pageMessageLocation === undefined) {
+                _priv.buildPageMessageLocation();
+            }
+
+            $messageLoc = $(_vars.pageMessageLocation);
         }
 
         if (fieldMessage.messages && fieldMessage.messages.length > 0) {
