@@ -34,8 +34,8 @@ body{
         </div>
     </header>
     <div id="body-wrapper">
-        <ul class="cui-messages">
-            <li class="cui-success">HTML - Retrieve Message.</li>
+        <ul class="cui-messages cui-hidden">
+            <!-- <li class="cui-success">HTML - Retrieve Message.</li> -->
         </ul>
         <main role="main" id="main">
             <form name="form_content" id="form_content" action="www.ny.gov" method="post">
@@ -144,9 +144,9 @@ body{
                                     </div>
 
                                 </div>
-                                <ul class="cui-messages cui-field-message">
+                               <!--  <ul class="cui-messages cui-field-message">
                                     <li class="cui-informational" id="replacement">HTML - This field had a HTML message, it should be replaced.</li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                     </div>
@@ -279,7 +279,7 @@ body{
 
             window.removeMessage = function(num) {
                 /*DEBUG - START*/
-                console.log('removeMessage');
+                // console.log('removeMessage');
                 /*DEBUG - END*/
                 if(userMessage.messageStore && userMessage.messageStore.length >= num+1){
                     userMessage.removeMessage(userMessage.messageStore[num].ref);
@@ -313,55 +313,55 @@ body{
                     //     "text": "JSON - Sample informational message."
                     // }
                 ],
-                "field": [
-                    {
-                        "elem": "#taxType",
-                        "parameters": {
-                            "reveal": revealFunction,
-                            "suppressPageNotifier": "false",
-                            "scroll": "true"
-                        },
-                        "messages": [
-                            {
-                                "template": "message",
-                                "type": "error",
-                                "text": "JSON - First name is required.",
-                                "parameters":{
-                                    "id": "message id for reference, otherwise one will be created."
-                                }
-                            },
-                            {
-                                "template": "message",
-                                "type": "warning",
-                                "text": "JSON - Replacement Message.",
-                                "parameters":{
-                                    "id": "replacement"
-                                }
-                            }
-                        ]
-                    },
-                    // {
-                    //     "elem": "#name_first",
-                    //     "messages": [
-                    //         {
-                    //             "template": "message",
-                    //             "type": "error",
-                    //             "text": "JSON - You have to be 18 years or older to use this application. JSON"
-                    //         },
-                    //         {
-                    //             "template": "message",
-                    //             "type": "error",
-                    //             "text": "JSON - Minimum year accepted is 1900. JSON"
-                    //         }
-                    //     ]
-                    // }
-                ]
+                // "field": [
+                //     {
+                //         "elem": "#taxType",
+                //         "parameters": {
+                //             "reveal": revealFunction,
+                //             "suppressPageNotifier": "false",
+                //             "scroll": "true"
+                //         },
+                //         "messages": [
+                //             {
+                //                 "template": "message",
+                //                 "type": "error",
+                //                 "text": "JSON - First name is required.",
+                //                 "parameters":{
+                //                     "id": "message id for reference, otherwise one will be created."
+                //                 }
+                //             },
+                //             {
+                //                 "template": "message",
+                //                 "type": "warning",
+                //                 "text": "JSON - Replacement Message.",
+                //                 "parameters":{
+                //                     "id": "replacement"
+                //                 }
+                //             }
+                //         ]
+                //     },
+                //     // {
+                //     //     "elem": "#name_first",
+                //     //     "messages": [
+                //     //         {
+                //     //             "template": "message",
+                //     //             "type": "error",
+                //     //             "text": "JSON - You have to be 18 years or older to use this application. JSON"
+                //     //         },
+                //     //         {
+                //     //             "template": "message",
+                //     //             "type": "error",
+                //     //             "text": "JSON - Minimum year accepted is 1900. JSON"
+                //     //         }
+                //     //     ]
+                //     // }
+                // ]
             }
 
 
             // userMessage.setPageNotifierMessage("This is a custom page notifier message. Look below to find more messages");
             // userMessage.setPageNotifierMessage("This message should not be set.");
-            userMessage.create(messages);
+            // userMessage.create(messages);
 
         });
     </script>
