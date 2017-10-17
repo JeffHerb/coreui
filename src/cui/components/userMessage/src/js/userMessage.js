@@ -7,7 +7,8 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             informational: 'cui-informational',
             default: 'cui-error'
         },
-        pageNotifier: 'cui-field-error-notifier'
+        pageNotifier: 'cui-field-error-notifier',
+        hidden: 'cui-hidden'
     };
 
     // Private method namespace
@@ -191,6 +192,21 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
         }
 
         _priv.updatePageNotifier();
+
+        //Check if page message location has messages, if not hide message location.
+        if(_vars.pageMessageLocation){
+            var $pageMessageLoc;
+            if (_vars.pageMessageLocation instanceof jQuery) {
+                $pageMessageLoc = _vars.pageMessageLocation;
+            }
+            else{
+                $pageMessageLoc = $(_vars.pageMessageLocation);
+            }
+
+            if($pageMessageLoc.children().length === 0){
+                $pageMessageLoc.addClass(CLASSES.hidden);
+            }
+        }
     };
 
 
@@ -617,7 +633,7 @@ define(['jquery', 'kind', 'guid', 'journal'], function ($, kind, guid) {
             }
         }
 
-        if ($notifier !== undefined && !displayNotifier) {
+        if ($notifier.length > 0 && !displayNotifier) {
             $notifier.remove();
             if ($messageLocation.children().length <= 0) {
                 $messageLocation.addClass('cui-hidden');
