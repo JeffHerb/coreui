@@ -309,7 +309,8 @@ define(['jquery', 'cui', 'guid', 'withinviewport', 'uiBox', 'uiPosition'], funct
 
         popover.isShown = true;
 
-        if((typeof popover.config.location === 'string') && (popover.config.location.indexOf('below')!== -1)){
+        //If not positioned below and not set to resize on mobile
+        if((typeof popover.config.location === 'string') && (popover.config.location.indexOf('below')!== -1) && !popover.config.resizeMobile || (popover.config.resizeMobile && (window.innerWidth > MOBILE_BREAKPOINT))){
             priv.resetMaxHeight(popover);
             priv.resetSize(popover);
             priv.resetInnerContentHeight(popover);
